@@ -18,8 +18,6 @@ import {
   CreditCard,
   Home,
   Plus,
-  Sparkles,
-  TrendingUp,
   Settings,
   Command,
 } from "lucide-react";

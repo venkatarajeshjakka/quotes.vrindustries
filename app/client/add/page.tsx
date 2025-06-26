@@ -73,7 +73,7 @@ const AddQuoteForm = ({ className, ...props }: React.ComponentProps<"div">) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const clientData: Client = {
-      id: `client-${Date.now()}`,
+      id: `client-${crypto.randomUUID()}`,
       name: formData.name!,
       company: formData.company!,
       address: formData.address!,
