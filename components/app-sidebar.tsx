@@ -21,7 +21,7 @@ import {
   Settings,
   Command,
 } from "lucide-react";
-
+import Link from "next/link";
 import { NavUser } from "@/components/nav-user";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -33,32 +33,32 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const items = [
     {
       title: "Home",
-      url: "#",
+      url: "/",
       icon: Home,
     },
     {
       title: "Quotations",
-      url: "#",
+      url: "/quotation",
       icon: Plus,
     },
     {
-      title: "Organization",
-      url: "#",
+      title: "Organizations",
+      url: "/organization",
       icon: Building,
     },
     {
       title: "Clients",
-      url: "#",
+      url: "/client",
       icon: Users,
     },
     {
       title: "Bank Details",
-      url: "#",
+      url: "/bank-details",
       icon: CreditCard,
     },
     {
       title: "Settings",
-      url: "#",
+      url: "/settings",
       icon: Settings,
     },
   ];
@@ -68,7 +68,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <a href="#">
+              <Link href="/">
                 <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                   <Command className="size-4" />
                 </div>
@@ -76,7 +76,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <span className="truncate font-medium">Acme Inc</span>
                   <span className="truncate text-xs">Enterprise</span>
                 </div>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -89,10 +89,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

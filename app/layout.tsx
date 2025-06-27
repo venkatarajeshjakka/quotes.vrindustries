@@ -2,19 +2,25 @@ import "./globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { ClientProvider } from "@/contexts/client-context";
+import { BankProvider } from "@/contexts/bank-context";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="flex min-h-screen w-full">
+    <html lang="en" className="min-h-screen">
+      <body className="flex min-h-screen w-full bg-background text-foreground">
         <ClientProvider>
-          <SidebarProvider>
-            <AppSidebar />
-            <main className="flex-1 w-full min-h-screen">
-              <SidebarTrigger />
-              {children}
-            </main>
-          </SidebarProvider>
+          <BankProvider>
+            <SidebarProvider>
+              <AppSidebar />
+              <main
+                className="flex-1 w-full min-h-screen bg-card px-4 py-6 md:px-8 md:py-10 transition-colors duration-200 overflow-x-auto shadow-inner border-l border-border"
+                tabIndex={-1}
+              >
+                <SidebarTrigger />
+                {children}
+              </main>
+            </SidebarProvider>
+          </BankProvider>
         </ClientProvider>
       </body>
     </html>

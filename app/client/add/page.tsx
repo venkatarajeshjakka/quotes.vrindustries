@@ -1,15 +1,6 @@
 "use client";
-import Link from "next/link";
-import { SlashIcon } from "lucide-react";
+
 import { cn } from "@/lib/utils";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -21,33 +12,12 @@ import { useState } from "react";
 import { useClient, type Client } from "@/contexts/client-context";
 import { useRouter } from "next/navigation";
 
-const BreadcrumbWithCustomSeperator = () => (
-  <Breadcrumb>
-    <BreadcrumbList>
-      <BreadcrumbItem>
-        <BreadcrumbLink asChild>
-          <Link href="/">Home</Link>
-        </BreadcrumbLink>
-      </BreadcrumbItem>
-      <BreadcrumbSeparator>
-        <SlashIcon />
-      </BreadcrumbSeparator>
-      <BreadcrumbItem>
-        <BreadcrumbLink asChild>
-          <Link href="/client">Clients</Link>
-        </BreadcrumbLink>
-      </BreadcrumbItem>
-      <BreadcrumbSeparator>
-        <SlashIcon />
-      </BreadcrumbSeparator>
-      <BreadcrumbItem>
-        <BreadcrumbPage>Add Client</BreadcrumbPage>
-      </BreadcrumbItem>
-    </BreadcrumbList>
-  </Breadcrumb>
-);
+import { BreadcrumbWithCustomSeperator } from "@/components/bread-crumb-custom";
 
-const AddQuoteForm = ({ className, ...props }: React.ComponentProps<"div">) => {
+const AddClientForm = ({
+  className,
+  ...props
+}: React.ComponentProps<"div">) => {
   const { state, dispatch } = useClient();
   const router = useRouter();
   const [formData, setFormData] = useState<Partial<Client>>({
@@ -210,11 +180,15 @@ export default function AddClientPage() {
   return (
     <div className="flex flex-col gap-6 p-6 md:p-10">
       <div className="self-start">
-        <BreadcrumbWithCustomSeperator />
+        <BreadcrumbWithCustomSeperator
+          prePageHref="/client"
+          prePageText="Clients"
+          currentPage="Add Client"
+        />
       </div>
       <div className="flex w-full max-w-sm flex-col gap-6 mx-auto">
         <h1 className="text-2xl font-bold mb-2 self-center">Add Client</h1>
-        <AddQuoteForm />
+        <AddClientForm />
       </div>
     </div>
   );
