@@ -273,19 +273,31 @@ const QuoatationPage = ({
       <main className="flex-1 p-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-2 lg:grid-cols-4 mb-6 bg-white/80 backdrop-blur-sm">
-            <TabsTrigger value="details" className="flex items-center gap-2">
+            <TabsTrigger
+              value="details"
+              className="flex items-center gap-2  text-blue-600 dark:text-blue-400"
+            >
               {getTabIcon("details")}
               Details
             </TabsTrigger>
-            <TabsTrigger value="products" className="flex items-center gap-2">
+            <TabsTrigger
+              value="products"
+              className="flex items-center gap-2 text-blue-600 dark:text-blue-400"
+            >
               {getTabIcon("products")}
               Products
             </TabsTrigger>
-            <TabsTrigger value="content" className="flex items-center gap-2">
+            <TabsTrigger
+              value="content"
+              className="flex items-center gap-2  text-blue-600 dark:text-blue-400"
+            >
               {getTabIcon("content")}
               Content
             </TabsTrigger>
-            <TabsTrigger value="finalize" className="flex items-center gap-2">
+            <TabsTrigger
+              value="finalize"
+              className="flex items-center gap-2  text-blue-600 dark:text-blue-400"
+            >
               {getTabIcon("finalize")}
               Finalize
             </TabsTrigger>
