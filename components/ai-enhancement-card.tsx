@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { Check, X, RefreshCw, Sparkles, Wand2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import ReactMarkdown from "react-markdown";
 
 interface AIEnhancementCardProps {
   title: string;
@@ -110,12 +111,15 @@ export function AIEnhancementCard({
 
           <div className="space-y-2">
             <div className="bg-white/80 rounded-lg p-3 border border-green-200">
-              <div className="text-sm text-gray-700">
-                {isExpanded
-                  ? enhancedContent
-                  : `${enhancedContent.slice(0, 200)}${
-                      enhancedContent.length > 200 ? "..." : ""
-                    }`}
+              <div className="text-sm text-gray-700 prose prose-sm max-w-none">
+                {isExpanded ? (
+                  <ReactMarkdown>{enhancedContent}</ReactMarkdown>
+                ) : (
+                  <ReactMarkdown>
+                    {enhancedContent.slice(0, 200) +
+                      (enhancedContent.length > 200 ? "..." : "")}
+                  </ReactMarkdown>
+                )}
               </div>
               {enhancedContent.length > 200 && (
                 <Button

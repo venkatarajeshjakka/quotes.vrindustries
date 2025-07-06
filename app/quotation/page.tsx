@@ -26,6 +26,9 @@ import ClientSection from "@/components/sections/client-section";
 import OrganizationSection from "@/components/sections/organization-section";
 import SubjectSection from "@/components/sections/subject-section";
 import KeyFeaturesSection from "@/components/sections/key-features-section";
+import TechnicalDetailsSection from "@/components/sections/technical-details-section";
+import TermsConditionsSection from "@/components/sections/terms-conditions-section";
+import BankDetailsSection from "@/components/sections/bank-details-section";
 type HeaderProps = {
   status: string;
   quotationNumber: string;
@@ -296,10 +299,14 @@ const QuoatationPage = ({
             <SubjectSection />
           </TabsContent>
 
-          <TabsContent value="products" className="space-y-6"></TabsContent>
+          <TabsContent value="products" className="space-y-6">
+            <BankDetailsSection />
+          </TabsContent>
 
           <TabsContent value="content" className="space-y-6">
+            <TechnicalDetailsSection />
             <KeyFeaturesSection />
+            <TermsConditionsSection />
           </TabsContent>
 
           <TabsContent value="finalize" className="space-y-6"></TabsContent>
