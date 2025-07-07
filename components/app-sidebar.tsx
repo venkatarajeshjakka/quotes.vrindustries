@@ -22,6 +22,7 @@ import {
   Command,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { NavUser } from "@/components/nav-user";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -39,7 +40,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     {
       title: "Quotations",
       url: "/quotation",
-      icon: Plus,
+      icon: Plus, // Plus for new quotation or list
     },
     {
       title: "Organizations",
@@ -62,6 +63,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       icon: Settings,
     },
   ];
+  const pathname = usePathname();
   return (
     <Sidebar className="bg-gradient-to-b from-blue-50 via-white to-blue-100 dark:from-blue-950 dark:via-muted dark:to-blue-950 border-r border-blue-100 dark:border-blue-900 shadow-xl min-h-screen">
       <SidebarHeader>
@@ -92,21 +94,60 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link
-                      href={item.url}
-                      className="group flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 hover:bg-blue-100/70 dark:hover:bg-blue-900/30 hover:shadow-md"
-                    >
-                      <item.icon className="w-5 h-5 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform duration-200" />
-                      <span className="font-medium text-blue-900 dark:text-blue-100 group-hover:text-blue-700 dark:group-hover:text-blue-300 tracking-wide">
-                        {item.title}
-                      </span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {items.map((item) => {
+                // Match exact or subpath for active state (e.g., /client, /client/add)
+                const isActive =
+                  pathname === item.url ||
+                  (item.url !== "/" && pathname.startsWith(item.url + "/"));
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <Link
+                        href={item.url}
+                        className={`group flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-300 ease-in-out
+                          relative overflow-hidden
+                          ${
+                            isActive
+                              ? "bg-gradient-to-r from-blue-200 to-blue-100 dark:from-blue-900 dark:to-blue-800 shadow-lg scale-105 border border-blue-400 dark:border-blue-700"
+                              : "hover:bg-blue-100/70 dark:hover:bg-blue-900/30 hover:shadow-md"
+                          }
+                        `}
+                      >
+                        <span
+                          className={`absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-blue-400 to-blue-600 rounded-r transition-all duration-500 ease-in-out
+                            ${
+                              isActive
+                                ? "opacity-100 scale-y-100"
+                                : "opacity-0 scale-y-0"
+                            }
+                          `}
+                          aria-hidden="true"
+                        />
+                        <item.icon
+                          className={`w-5 h-5 transition-transform duration-300 ease-in-out
+                          ${
+                            isActive
+                              ? "text-blue-700 dark:text-blue-300 scale-110"
+                              : "text-blue-600 dark:text-blue-400 group-hover:scale-110"
+                          }
+                        `}
+                        />
+                        <span
+                          className={`font-semibold tracking-wide transition-colors duration-300 ease-in-out
+                            ${
+                              isActive
+                                ? "text-blue-900 dark:text-blue-100"
+                                : "text-blue-900 dark:text-blue-100 group-hover:text-blue-700 dark:group-hover:text-blue-300"
+                            }
+                          `}
+                        >
+                          {item.title}
+                        </span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
