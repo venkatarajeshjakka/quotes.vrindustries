@@ -18,7 +18,6 @@ import {
   FileText,
   Printer,
   Save,
-  Sparkles,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useQuotation } from "@/contexts/quotation-context";
@@ -29,6 +28,9 @@ import KeyFeaturesSection from "@/components/sections/key-features-section";
 import TechnicalDetailsSection from "@/components/sections/technical-details-section";
 import TermsConditionsSection from "@/components/sections/terms-conditions-section";
 import BankDetailsSection from "@/components/sections/bank-details-section";
+import ProductSection from "@/components/sections/product-section";
+import SignatureSection from "@/components/sections/signature-section";
+import { Card } from "@/components/ui/card";
 type HeaderProps = {
   status: string;
   quotationNumber: string;
@@ -239,7 +241,7 @@ const QuoatationPage = ({
       case "details":
         return <FileText className="w-4 h-4" />;
       case "products":
-        return <Sparkles className="w-4 h-4" />;
+        return <Badge className="w-4 h-4" />;
       case "content":
         return <CheckCircle className="w-4 h-4" />;
       case "finalize":
@@ -312,6 +314,7 @@ const QuoatationPage = ({
           </TabsContent>
 
           <TabsContent value="products" className="space-y-6">
+            <ProductSection />
             <BankDetailsSection />
           </TabsContent>
 
@@ -321,7 +324,85 @@ const QuoatationPage = ({
             <TermsConditionsSection />
           </TabsContent>
 
-          <TabsContent value="finalize" className="space-y-6"></TabsContent>
+          <TabsContent value="finalize" className="space-y-6">
+            <SignatureSection />
+            <Card className="border-0 shadow-xl bg-gradient-to-r from-blue-50 to-purple-50">
+              <div className="p-8">
+                <h3 className="text-2xl font-bold mb-6 text-gray-900 flex items-center gap-2">
+                  <CheckCircle className="w-6 h-6 text-green-600" />
+                  Quotation Summary
+                </h3>
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+                  <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <p className="text-sm font-medium text-gray-600 mb-2">
+                      Quotation Number
+                    </p>
+                    <p className="text-xl font-bold text-gray-900">
+                      {state.quotation.quotationNumber}
+                    </p>
+                  </div>
+                  <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <p className="text-sm font-medium text-gray-600 mb-2">
+                      Total Amount
+                    </p>
+                    <p className="text-xl font-bold text-green-600">
+                      ₹{state.quotation.total.toLocaleString("en-IN")}
+                    </p>
+                  </div>
+                  <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <p className="text-sm font-medium text-gray-600 mb-2">
+                      Products
+                    </p>
+                    <p className="text-xl font-bold text-gray-900">
+                      {state.quotation.products.length} items
+                    </p>
+                  </div>
+                  <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <p className="text-sm font-medium text-gray-600 mb-2">
+                      Status
+                    </p>
+                    <Badge
+                      className={`${getStatusBadge(
+                        state.quotation.status
+                      )} text-sm font-bold`}
+                    >
+                      {state.quotation.status.toUpperCase()}
+                    </Badge>
+                  </div>
+                </div>
+
+                <div className="border-t border-gray-200 pt-6">
+                  <div className="flex flex-wrap gap-4">
+                    <Button
+                      onClick={handlePreview}
+                      size="lg"
+                      className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg"
+                    >
+                      <Eye className="w-5 h-5 mr-2" />
+                      Preview & Export
+                    </Button>
+                    <Button
+                      onClick={() => handleSaveAs("sent")}
+                      variant="outline"
+                      size="lg"
+                      className="hover:bg-blue-50"
+                    >
+                      <FileText className="w-5 h-5 mr-2" />
+                      Mark as Sent
+                    </Button>
+                    <Button
+                      onClick={onBackToDashboard}
+                      variant="outline"
+                      size="lg"
+                      className="hover:bg-gray-50"
+                    >
+                      Back to Dashboard
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </TabsContent>
         </Tabs>
       </main>
     </div>
