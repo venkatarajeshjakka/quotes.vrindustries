@@ -11,8 +11,9 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { useClient, type Client } from "@/contexts/client-context";
 import { useRouter } from "next/navigation";
-
 import { BreadcrumbWithCustomSeperator } from "@/components/bread-crumb-custom";
+
+import { UserRoundPlus } from "lucide-react";
 
 const AddClientForm = ({
   className,
@@ -57,63 +58,94 @@ const AddClientForm = ({
   };
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
-        <CardContent>
+    <div className={cn("flex flex-col gap-8", className)} {...props}>
+      <Card className="rounded-2xl shadow-lg border-0 bg-white/95">
+        <CardContent className="py-8 px-4 md:px-10">
+          <div className="flex flex-col items-center mb-8">
+            <div className="bg-gradient-to-br from-blue-400 to-blue-200 w-16 h-16 rounded-full flex items-center justify-center shadow-md mb-3">
+              <UserRoundPlus className="w-8 h-8 text-white" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-1">
+              Add a New Client
+            </h2>
+            <p className="text-gray-600 text-center max-w-md">
+              Fill in the details below to add a new client to your records.
+              Required fields are marked with{" "}
+              <span className="text-red-500">*</span>.
+            </p>
+          </div>
           <form onSubmit={handleSubmit}>
             <div className="grid gap-6">
-              <div className="grid gap-3">
-                <Label htmlFor="name">Name</Label>
-                <Input
-                  id="name"
-                  type="text"
-                  value={formData.name || ""}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, name: e.target.value }))
-                  }
-                  required
-                  placeholder="Enter client name"
-                  className="w-full"
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid gap-3">
+                  <Label htmlFor="name" className="font-semibold text-gray-800">
+                    Name <span className="text-red-500">*</span>
+                  </Label>
+                  <Input
+                    id="name"
+                    type="text"
+                    value={formData.name || ""}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, name: e.target.value }))
+                    }
+                    required
+                    placeholder="e.g. John Doe"
+                    className="w-full bg-white/90 border border-blue-100 rounded-lg shadow-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-100 text-base px-4 py-3"
+                  />
+                </div>
+                <div className="grid gap-3">
+                  <Label
+                    htmlFor="company-name"
+                    className="font-semibold text-gray-800"
+                  >
+                    Company Name <span className="text-red-500">*</span>
+                  </Label>
+                  <Input
+                    id="company-name"
+                    type="text"
+                    value={formData.company || ""}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        company: e.target.value,
+                      }))
+                    }
+                    required
+                    placeholder="e.g. TechMachinery Solutions Pvt Ltd"
+                    className="w-full bg-white/90 border border-blue-100 rounded-lg shadow-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-100 text-base px-4 py-3"
+                  />
+                </div>
               </div>
-              <div className="grid gap-3">
-                <Label htmlFor="company-name">Company Name</Label>
-                <Input
-                  id="company-name"
-                  type="text"
-                  value={formData.company || ""}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      company: e.target.value,
-                    }))
-                  }
-                  required
-                  placeholder="Enter company name"
-                  className="w-full"
-                />
-              </div>
-              <div>
-                <Label htmlFor="address">Company Address *</Label>
-                <Textarea
-                  id="address"
-                  value={formData.address || ""}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      address: e.target.value,
-                    }))
-                  }
-                  rows={3}
-                  required
-                  className="mt-1"
-                  placeholder="Enter complete company address..."
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="phone">Phone Number *</Label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid gap-3">
+                  <Label
+                    htmlFor="address"
+                    className="font-semibold text-gray-800"
+                  >
+                    Company Address <span className="text-red-500">*</span>
+                  </Label>
+                  <Textarea
+                    id="address"
+                    value={formData.address || ""}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        address: e.target.value,
+                      }))
+                    }
+                    rows={3}
+                    required
+                    placeholder="123 Industrial Area, Sector 15, Gurgaon, Haryana - 122001"
+                    className="w-full bg-white/90 border border-blue-100 rounded-lg shadow-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-100 text-base px-4 py-3"
+                  />
+                </div>
+                <div className="grid gap-3">
+                  <Label
+                    htmlFor="phone"
+                    className="font-semibold text-gray-800"
+                  >
+                    Phone Number <span className="text-red-500">*</span>
+                  </Label>
                   <Input
                     id="phone"
                     value={formData.phone || ""}
@@ -124,12 +156,19 @@ const AddClientForm = ({
                       }))
                     }
                     required
-                    className="mt-1"
-                    placeholder="+91 9876543210"
+                    placeholder="e.g. +91 9876543210"
+                    className="w-full bg-white/90 border border-blue-100 rounded-lg shadow-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-100 text-base px-4 py-3"
                   />
                 </div>
-                <div>
-                  <Label htmlFor="email">Email Address *</Label>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid gap-3">
+                  <Label
+                    htmlFor="email"
+                    className="font-semibold text-gray-800"
+                  >
+                    Email Address <span className="text-red-500">*</span>
+                  </Label>
                   <Input
                     id="email"
                     type="email"
@@ -141,33 +180,46 @@ const AddClientForm = ({
                       }))
                     }
                     required
-                    className="mt-1"
-                    placeholder="john@company.com"
+                    placeholder="e.g. john@company.com"
+                    className="w-full bg-white/90 border border-blue-100 rounded-lg shadow-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-100 text-base px-4 py-3"
+                  />
+                </div>
+                <div className="grid gap-3">
+                  <Label
+                    htmlFor="gstNumber"
+                    className="font-semibold text-gray-800"
+                  >
+                    GST Number
+                  </Label>
+                  <Input
+                    id="gstNumber"
+                    value={formData.gstNumber || ""}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        gstNumber: e.target.value,
+                      }))
+                    }
+                    placeholder="e.g. 22AAAAA0000A1Z5"
+                    className="w-full bg-white/90 border border-blue-100 rounded-lg shadow-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-100 text-base px-4 py-3"
                   />
                 </div>
               </div>
-
-              <div>
-                <Label htmlFor="gstNumber">GST Number</Label>
-                <Input
-                  id="gstNumber"
-                  value={formData.gstNumber || ""}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      gstNumber: e.target.value,
-                    }))
-                  }
-                  className="mt-1"
-                  placeholder="22AAAAA0000A1Z5"
-                />
-              </div>
-
-              <div className="flex justify-end gap-3 pt-4 border-t">
-                <Button type="button" variant="outline" onClick={resetForm}>
+              <div className="flex justify-end gap-4 pt-6 border-t border-blue-100 mt-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={resetForm}
+                  className="px-6 py-2 rounded-full border-gray-300 text-gray-700 hover:bg-gray-100 font-semibold transition-all"
+                >
                   Cancel
                 </Button>
-                <Button type="submit">Add Client</Button>
+                <Button
+                  type="submit"
+                  className="px-8 py-2 rounded-full bg-gradient-to-br from-blue-600 to-blue-400 text-white font-bold shadow-lg hover:from-blue-700 hover:to-blue-500 transition-all"
+                >
+                  Add Client
+                </Button>
               </div>
             </div>
           </form>
@@ -178,16 +230,15 @@ const AddClientForm = ({
 };
 export default function AddClientPage() {
   return (
-    <div className="flex flex-col gap-6 p-6 md:p-10">
-      <div className="self-start">
+    <div className="min-h-screen flex flex-col items-center py-8 px-2 md:px-0">
+      <div className="w-full max-w-3xl self-start">
         <BreadcrumbWithCustomSeperator
           prePageHref="/client"
           prePageText="Clients"
           currentPage="Add Client"
         />
       </div>
-      <div className="flex w-full max-w-sm flex-col gap-6 mx-auto">
-        <h1 className="text-2xl font-bold mb-2 self-center">Add Client</h1>
+      <div className="w-full max-w-3xl mt-2">
         <AddClientForm />
       </div>
     </div>

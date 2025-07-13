@@ -15,25 +15,47 @@ const BankDetailCard = ({
   bank: BankDetails;
   deleteBankDetails: (id: string) => void;
 }) => (
-  <Card key={bank.id} className="hover:shadow-lg transition-shadow">
-    <CardContent className="p-6">
-      <div className="flex justify-between items-start">
-        <div className="flex-1">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-purple-100 p-2 rounded-lg">
-              <CreditCard className="w-6 h-6 text-purple-600" />
+  <Card
+    key={bank.id}
+    className="hover:shadow-2xl transition-shadow border-0 bg-white/95 rounded-2xl overflow-hidden relative"
+  >
+    <CardContent className="p-8">
+      {/* Action buttons absolutely positioned at top-right */}
+      <div className="absolute top-6 right-6 flex flex-col gap-3 z-10">
+        <Button
+          variant="outline"
+          size="sm"
+          className="border-purple-200 text-purple-700 hover:bg-purple-50 hover:text-purple-900 font-semibold px-4 py-2 rounded-lg shadow-sm flex items-center"
+          onClick={() => console.log("Edit bank details")}
+        >
+          <Edit className="w-4 h-4 mr-1" />
+          <span className="hidden md:inline">Edit</span>
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => deleteBankDetails(bank.id)}
+          className="border-red-200 text-red-600 hover:text-white hover:bg-red-500 hover:border-red-500 font-semibold px-4 py-2 rounded-lg shadow-sm flex items-center"
+        >
+          <Trash2 className="w-4 h-4" />
+        </Button>
+      </div>
+      <div className="flex flex-col gap-4 md:gap-0 md:flex-row md:justify-between md:items-center">
+        <div className="flex-1 w-full">
+          <div className="flex items-center gap-4 mb-5">
+            <div className="bg-gradient-to-br from-purple-400 to-purple-200 p-3 rounded-xl shadow-md">
+              <CreditCard className="w-7 h-7 text-white" />
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-gray-900">
+              <h3 className="text-2xl font-bold text-gray-900 tracking-tight mb-1">
                 {bank.bankName}
               </h3>
-              <p className="text-blue-600 font-medium">
+              <span className="inline-block text-xs bg-purple-50 text-purple-700 px-2 py-0.5 rounded-full font-medium">
                 {bank.accountHolderName}
-              </p>
+              </span>
             </div>
           </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-sm">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-base">
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <span className="font-medium text-gray-600">
@@ -50,30 +72,13 @@ const BankDetailCard = ({
             </div>
             <div className="space-y-3">
               <div className="flex items-center gap-2">
-                <Building className="w-4 h-4 text-gray-400" />
-                <span className="text-gray-700">Branch: {bank.branch}</span>
+                <Building className="w-5 h-5 text-purple-400" />
+                <span className="text-gray-800 font-medium">
+                  Branch: {bank.branch}
+                </span>
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="flex gap-2 ml-4">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => console.log("Edit bank details")}
-          >
-            <Edit className="w-4 h-4 mr-1" />
-            Edit
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => deleteBankDetails(bank.id)}
-            className="text-red-600 hover:text-red-700 hover:bg-red-50"
-          >
-            <Trash2 className="w-4 h-4" />
-          </Button>
         </div>
       </div>
     </CardContent>
