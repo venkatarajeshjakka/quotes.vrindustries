@@ -10,6 +10,7 @@ import { Banknote } from "lucide-react";
 import { useState } from "react";
 import { useBankDetails, type BankDetails } from "@/contexts/bank-context";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 import { BreadcrumbWithCustomSeperator } from "@/components/bread-crumb-custom";
 
@@ -45,7 +46,7 @@ const AddBankForm = ({ className, ...props }: React.ComponentProps<"div">) => {
       branch: formData.branch!,
     };
     dispatch({ type: "ADD_BANK", payload: bankData });
-
+    toast.success("Bank details added successfully!");
     router.push("/bank-details");
     resetForm();
   };

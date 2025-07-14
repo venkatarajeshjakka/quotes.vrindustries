@@ -2,6 +2,7 @@
 
 import { Building, Edit, Mail, Phone, Plus, Trash2, Users } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 import { useClient } from "@/contexts/client-context";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -104,6 +105,7 @@ export default function ClientPage() {
 
   const deleteClient = (id: string) => {
     dispatch({ type: "DELETE_CLIENT", payload: id });
+    toast.success("Client deleted successfully!");
   };
 
   const filteredClients = state.filter(

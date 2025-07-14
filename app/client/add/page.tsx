@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { useClient, type Client } from "@/contexts/client-context";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { BreadcrumbWithCustomSeperator } from "@/components/bread-crumb-custom";
 
 import { UserRoundPlus } from "lucide-react";
@@ -53,6 +54,7 @@ const AddClientForm = ({
       gstNumber: formData.gstNumber || "",
     };
     dispatch({ type: "ADD_CLIENT", payload: clientData });
+    toast.success("Client added successfully!");
     router.push("/client");
     resetForm();
   };

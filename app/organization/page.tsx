@@ -11,6 +11,7 @@ import {
   Users,
 } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 import { useOrganizationDetails } from "@/contexts/organization-context";
 
 import { Button } from "@/components/ui/button";
@@ -116,6 +117,7 @@ export default function Page() {
 
   const deleteOrganization = (id: string) => {
     dispatch({ type: "DELETE_ORGANIZATION", payload: id });
+    toast.success("Organization deleted successfully!");
   };
 
   const filteredOrganizations = state.filter(

@@ -15,6 +15,7 @@ import {
 } from "@/contexts/organization-context";
 
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { BreadcrumbWithCustomSeperator } from "@/components/bread-crumb-custom";
 import { Building2 } from "lucide-react";
 
@@ -58,6 +59,7 @@ const AddOrganizationForm = ({
     };
 
     dispatch({ type: "ADD_ORGANIZATION", payload: orgData });
+    toast.success("Organization added successfully!");
     resetForm();
     router.push("/organization");
   };

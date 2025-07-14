@@ -5,6 +5,7 @@ import { ClientProvider } from "@/contexts/client-context";
 import { BankProvider } from "@/contexts/bank-context";
 import { OrganizationProvider } from "@/contexts/organization-context";
 import { QuotationProvider } from "@/contexts/quotation-context";
+import { Toaster } from "sonner";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -22,6 +23,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   >
                     <SidebarTrigger />
                     {children}
+                    <Toaster position="top-right" richColors closeButton />
                   </main>
                 </SidebarProvider>
               </QuotationProvider>

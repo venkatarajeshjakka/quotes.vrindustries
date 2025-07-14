@@ -4,6 +4,7 @@ import { BreadcrumbWIthSeparator } from "@/components/bread-crumb";
 import { PageHeader } from "@/components/page-header";
 import { PageSearch } from "@/components/page-search";
 import { useBankDetails, type BankDetails } from "@/contexts/bank-context";
+import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Building, CreditCard, Edit, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -98,6 +99,7 @@ export default function page() {
 
   const deleteBankDetails = (id: string) => {
     dispatch({ type: "DELETE_BANK", payload: id });
+    toast.success("Bank details deleted successfully!");
   };
   return (
     <div className="flex flex-col min-h-screen w-full p-8">
