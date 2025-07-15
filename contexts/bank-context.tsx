@@ -67,6 +67,15 @@ export function BankProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  // Save to localStorage whenever state changes
+  useEffect(() => {
+    try {
+      localStorage.setItem("bankDetails", JSON.stringify(state));
+    } catch (error) {
+      console.error("Error saving bank details:", error);
+    }
+  }, [state]);
+
   return (
     <BankContext.Provider value={{ state, dispatch }}>
       {children}

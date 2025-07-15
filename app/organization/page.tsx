@@ -12,34 +12,25 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { useOrganizationDetails } from "@/contexts/organization-context";
+import { useOrganizationDetails, type Organization } from "@/contexts/organization-context";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { BreadcrumbWIthSeparator } from "@/components/bread-crumb";
 import { PageHeader } from "@/components/page-header";
 import { PageSearch } from "@/components/page-search";
-type ClientCardProps = {
-  id: string;
-  name: string;
-  address: string;
-  phone: string;
-  email: string;
-  gstNumber?: string;
-  website?: string;
+import { EditOrganizationForm } from "@/components/shared/EditOrganizationForm";
+type OrganizationCardProps = {
+  organization: Organization;
   deleteOrganization: (id: string) => void;
+  editOrganization: (organization: Organization) => void;
 };
 
 const OrganizationCard = ({
-  id,
-  name,
-  address,
-  phone,
-  email,
-  gstNumber,
-  website,
+  organization,
   deleteOrganization,
-}: ClientCardProps) => (
+  editOrganization,
+}: OrganizationCardProps) => (
   <Card className="hover:shadow-2xl transition-shadow border-0 bg-white/95 rounded-2xl overflow-hidden relative">
     <CardContent className="p-8">
       {/* Action buttons absolutely positioned at top-right */}
@@ -48,7 +39,7 @@ const OrganizationCard = ({
           variant="outline"
           size="sm"
           className="border-blue-200 text-blue-700 hover:bg-blue-50 hover:text-blue-900 font-semibold px-4 py-2 rounded-lg shadow-sm flex items-center"
-          onClick={() => console.log("Edit organization")}
+          onClick={() => editOrganization(organization)}
         >
           <Edit className="w-4 h-4 mr-1" />
           <span className="hidden md:inline">Edit</span>
@@ -56,7 +47,7 @@ const OrganizationCard = ({
         <Button
           variant="outline"
           size="sm"
-          onClick={() => deleteOrganization(id)}
+          onClick={() => deleteOrganization(organization.id)}
           className="border-red-200 text-red-600 hover:text-white hover:bg-red-500 hover:border-red-500 font-semibold px-4 py-2 rounded-lg shadow-sm flex items-center"
         >
           <Trash2 className="w-4 h-4" />
@@ -70,11 +61,11 @@ const OrganizationCard = ({
             </div>
             <div>
               <h3 className="text-2xl font-bold text-gray-900 tracking-tight mb-1">
-                {name}
+                {organization.name}
               </h3>
-              {gstNumber && (
+              {organization.gstNumber && (
                 <span className="inline-block text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full font-medium">
-                  GST: {gstNumber}
+                  GST: {organization.gstNumber}
                 </span>
               )}
             </div>
@@ -83,23 +74,23 @@ const OrganizationCard = ({
             <div className="space-y-3">
               <div className="flex items-start gap-2">
                 <Building className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-800 font-medium">{address}</span>
+                <span className="text-gray-800 font-medium">{organization.address}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-5 h-5 text-blue-400" />
-                <span className="text-gray-800 font-medium">{phone}</span>
+                <span className="text-gray-800 font-medium">{organization.phone}</span>
               </div>
             </div>
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <Mail className="w-5 h-5 text-blue-400" />
-                <span className="text-gray-800 font-medium">{email}</span>
+                <span className="text-gray-800 font-medium">{organization.email}</span>
               </div>
-              {website && (
+              {organization.website && (
                 <div className="flex items-center gap-2">
                   <Globe className="w-5 h-5 text-blue-400" />
                   <span className="text-gray-800 font-medium underline underline-offset-2">
-                    {website}
+                    {organization.website}
                   </span>
                 </div>
               )}
@@ -113,11 +104,23 @@ const OrganizationCard = ({
 
 export default function Page() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [editingOrganization, setEditingOrganization] = useState<Organization | null>(null);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const { state, dispatch } = useOrganizationDetails();
 
   const deleteOrganization = (id: string) => {
     dispatch({ type: "DELETE_ORGANIZATION", payload: id });
     toast.success("Organization deleted successfully!");
+  };
+
+  const editOrganization = (organization: Organization) => {
+    setEditingOrganization(organization);
+    setIsEditDialogOpen(true);
+  };
+
+  const closeEditDialog = () => {
+    setIsEditDialogOpen(false);
+    setEditingOrganization(null);
   };
 
   const filteredOrganizations = state.filter(
@@ -170,19 +173,23 @@ export default function Page() {
             filteredOrganizations.map((org) => (
               <OrganizationCard
                 key={org.id}
-                id={org.id}
-                name={org.name}
-                address={org.address}
-                phone={org.phone}
-                email={org.email}
-                gstNumber={org.gstNumber}
+                organization={org}
                 deleteOrganization={deleteOrganization}
-                website={org.website}
+                editOrganization={editOrganization}
               />
             ))
           )}
         </div>
       </main>
+
+      {/* Edit Organization Dialog */}
+      {editingOrganization && (
+        <EditOrganizationForm
+          organization={editingOrganization}
+          isOpen={isEditDialogOpen}
+          onClose={closeEditDialog}
+        />
+      )}
     </div>
   );
 }

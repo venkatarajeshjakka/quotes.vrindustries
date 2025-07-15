@@ -8,13 +8,16 @@ import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Building, CreditCard, Edit, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { EditBankDetailsForm } from "@/components/shared/EditBankDetailsForm";
 
 const BankDetailCard = ({
   bank,
   deleteBankDetails,
+  editBankDetails,
 }: {
   bank: BankDetails;
   deleteBankDetails: (id: string) => void;
+  editBankDetails: (bank: BankDetails) => void;
 }) => (
   <Card
     key={bank.id}
@@ -27,7 +30,7 @@ const BankDetailCard = ({
           variant="outline"
           size="sm"
           className="border-purple-200 text-purple-700 hover:bg-purple-50 hover:text-purple-900 font-semibold px-4 py-2 rounded-lg shadow-sm flex items-center"
-          onClick={() => console.log("Edit bank details")}
+          onClick={() => editBankDetails(bank)}
         >
           <Edit className="w-4 h-4 mr-1" />
           <span className="hidden md:inline">Edit</span>
@@ -88,7 +91,10 @@ const BankDetailCard = ({
 
 export default function page() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [editingBankDetails, setEditingBankDetails] = useState<BankDetails | null>(null);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const { state, dispatch } = useBankDetails();
+  
   const filteredBankDetails = state.filter(
     (bank) =>
       bank.bankName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -100,6 +106,16 @@ export default function page() {
   const deleteBankDetails = (id: string) => {
     dispatch({ type: "DELETE_BANK", payload: id });
     toast.success("Bank details deleted successfully!");
+  };
+
+  const editBankDetails = (bank: BankDetails) => {
+    setEditingBankDetails(bank);
+    setIsEditDialogOpen(true);
+  };
+
+  const closeEditDialog = () => {
+    setIsEditDialogOpen(false);
+    setEditingBankDetails(null);
   };
   return (
     <div className="flex flex-col min-h-screen w-full p-8">
@@ -123,11 +139,21 @@ export default function page() {
                 bank={bank}
                 key={bank.id}
                 deleteBankDetails={deleteBankDetails}
+                editBankDetails={editBankDetails}
               />
             ))
           )}
         </div>
       </main>
+      
+      {/* Edit Bank Details Dialog */}
+      {editingBankDetails && (
+        <EditBankDetailsForm
+          bankDetails={editingBankDetails}
+          isOpen={isEditDialogOpen}
+          onClose={closeEditDialog}
+        />
+      )}
     </div>
   );
 }

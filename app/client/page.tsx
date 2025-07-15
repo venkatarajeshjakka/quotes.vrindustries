@@ -3,32 +3,23 @@
 import { Building, Edit, Mail, Phone, Plus, Trash2, Users } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { useClient } from "@/contexts/client-context";
+import { useClient, type Client } from "@/contexts/client-context";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { BreadcrumbWIthSeparator } from "@/components/bread-crumb";
 import { PageHeader } from "@/components/page-header";
 import { PageSearch } from "@/components/page-search";
+import { EditClientForm } from "@/components/shared/EditClientForm";
 type ClientCardProps = {
-  id: string;
-  name: string;
-  company: string;
-  address: string;
-  phone: string;
-  email: string;
-  gstNumber?: string;
+  client: Client;
   deleteClient: (id: string) => void;
+  editClient: (client: Client) => void;
 };
 
 const ClientCard = ({
-  id,
-  name,
-  company,
-  address,
-  phone,
-  email,
-  gstNumber,
+  client,
   deleteClient,
+  editClient,
 }: ClientCardProps) => (
   <Card className="hover:shadow-2xl transition-shadow border-0 bg-white/95 rounded-2xl overflow-hidden relative">
     <CardContent className="p-8">
@@ -38,7 +29,7 @@ const ClientCard = ({
           variant="outline"
           size="sm"
           className="border-blue-200 text-blue-700 hover:bg-blue-50 hover:text-blue-900 font-semibold px-4 py-2 rounded-lg shadow-sm flex items-center"
-          onClick={() => console.log("Edit client")}
+          onClick={() => editClient(client)}
         >
           <Edit className="w-4 h-4 mr-1" />
           <span className="hidden md:inline">Edit</span>
@@ -46,7 +37,7 @@ const ClientCard = ({
         <Button
           variant="outline"
           size="sm"
-          onClick={() => deleteClient(id)}
+          onClick={() => deleteClient(client.id)}
           className="border-red-200 text-red-600 hover:text-white hover:bg-red-500 hover:border-red-500 font-semibold px-4 py-2 rounded-lg shadow-sm flex items-center"
         >
           <Trash2 className="w-4 h-4" />
@@ -60,10 +51,10 @@ const ClientCard = ({
             </div>
             <div>
               <h3 className="text-2xl font-bold text-gray-900 tracking-tight mb-1">
-                {name}
+                {client.name}
               </h3>
               <span className="inline-block text-xs bg-green-50 text-green-700 px-2 py-0.5 rounded-full font-medium">
-                {company}
+                {client.company}
               </span>
             </div>
           </div>
@@ -71,23 +62,23 @@ const ClientCard = ({
             <div className="space-y-3">
               <div className="flex items-start gap-2">
                 <Building className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-800 font-medium">{address}</span>
+                <span className="text-gray-800 font-medium">{client.address}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-5 h-5 text-green-400" />
-                <span className="text-gray-800 font-medium">{phone}</span>
+                <span className="text-gray-800 font-medium">{client.phone}</span>
               </div>
             </div>
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <Mail className="w-5 h-5 text-green-400" />
-                <span className="text-gray-800 font-medium">{email}</span>
+                <span className="text-gray-800 font-medium">{client.email}</span>
               </div>
-              {gstNumber && (
+              {client.gstNumber && (
                 <div className="flex items-center gap-2">
                   <Building className="w-5 h-5 text-green-400" />
                   <span className="text-gray-800 font-medium">
-                    GST: {gstNumber}
+                    GST: {client.gstNumber}
                   </span>
                 </div>
               )}
@@ -101,11 +92,23 @@ const ClientCard = ({
 
 export default function ClientPage() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [editingClient, setEditingClient] = useState<Client | null>(null);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const { state, dispatch } = useClient();
 
   const deleteClient = (id: string) => {
     dispatch({ type: "DELETE_CLIENT", payload: id });
     toast.success("Client deleted successfully!");
+  };
+
+  const editClient = (client: Client) => {
+    setEditingClient(client);
+    setIsEditDialogOpen(true);
+  };
+
+  const closeEditDialog = () => {
+    setIsEditDialogOpen(false);
+    setEditingClient(null);
   };
 
   const filteredClients = state.filter(
@@ -155,19 +158,23 @@ export default function ClientPage() {
             filteredClients.map((client) => (
               <ClientCard
                 key={client.id}
-                id={client.id}
-                name={client.name}
-                company={client.company}
-                address={client.address}
-                phone={client.phone}
-                email={client.email}
-                gstNumber={client.gstNumber}
+                client={client}
                 deleteClient={deleteClient}
+                editClient={editClient}
               />
             ))
           )}
         </div>
       </main>
+      
+      {/* Edit Client Dialog */}
+      {editingClient && (
+        <EditClientForm
+          client={editingClient}
+          isOpen={isEditDialogOpen}
+          onClose={closeEditDialog}
+        />
+      )}
     </div>
   );
 }

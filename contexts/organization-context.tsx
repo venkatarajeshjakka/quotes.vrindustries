@@ -77,6 +77,15 @@ export function OrganizationProvider({
     }
   }, []);
 
+  // Save to localStorage whenever state changes
+  useEffect(() => {
+    try {
+      localStorage.setItem("organizationDetails", JSON.stringify(state));
+    } catch (error) {
+      console.error("Error saving organization details:", error);
+    }
+  }, [state]);
+
   return (
     <OrganizationContext.Provider value={{ state, dispatch }}>
       {children}

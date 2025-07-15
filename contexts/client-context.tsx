@@ -73,6 +73,15 @@ export function ClientProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  // Save to localStorage whenever state changes
+  useEffect(() => {
+    try {
+      localStorage.setItem("clients", JSON.stringify(state));
+    } catch (error) {
+      console.error("Error saving clients:", error);
+    }
+  }, [state]);
+
   return (
     <ClientContext.Provider value={{ state, dispatch }}>
       {children}
