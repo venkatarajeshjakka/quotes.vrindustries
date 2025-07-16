@@ -62,29 +62,7 @@ export function OrganizationProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [state, dispatch] = useReducer(organizationReducer, initialState);
-
-  useEffect(() => {
-    // Load organizations
-    const savedOrganizations = localStorage.getItem("organizationDetails");
-    if (savedOrganizations) {
-      try {
-        const organizationDetails = JSON.parse(savedOrganizations);
-        dispatch({ type: "SET_ORGANIZATION", payload: organizationDetails });
-      } catch (error) {
-        console.error("Error loading organization details:", error);
-      }
-    }
-  }, []);
-
-  // Save to localStorage whenever state changes
-  useEffect(() => {
-    try {
-      localStorage.setItem("organizationDetails", JSON.stringify(state));
-    } catch (error) {
-      console.error("Error saving organization details:", error);
-    }
-  }, [state]);
+  const [state, dispatch] = useReducer(organizationReducer, initialState); 
 
   return (
     <OrganizationContext.Provider value={{ state, dispatch }}>

@@ -103,7 +103,10 @@
   - Fix typography and spacing for print
   - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.8_
 
-- [ ] 4.1 Print Preview Enhancements
+- [x] 4.1 Print Preview Enhancements
+
+
+
   - Update quotation preview component for better print layout
   - Add print-specific styling classes
   - Ensure consistent formatting across browsers

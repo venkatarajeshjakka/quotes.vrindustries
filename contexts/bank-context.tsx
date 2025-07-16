@@ -52,29 +52,7 @@ const BankContext = createContext<{
 } | null>(null);
 
 export function BankProvider({ children }: { children: React.ReactNode }) {
-  const [state, dispatch] = useReducer(bankReducer, initialState);
-
-  useEffect(() => {
-    // Load clients
-    const savedBanks = localStorage.getItem("bankDetails");
-    if (savedBanks) {
-      try {
-        const bankDetails = JSON.parse(savedBanks);
-        dispatch({ type: "SET_BANK_DETAILS", payload: bankDetails });
-      } catch (error) {
-        console.error("Error loading bank details:", error);
-      }
-    }
-  }, []);
-
-  // Save to localStorage whenever state changes
-  useEffect(() => {
-    try {
-      localStorage.setItem("bankDetails", JSON.stringify(state));
-    } catch (error) {
-      console.error("Error saving bank details:", error);
-    }
-  }, [state]);
+  const [state, dispatch] = useReducer(bankReducer, initialState);  
 
   return (
     <BankContext.Provider value={{ state, dispatch }}>

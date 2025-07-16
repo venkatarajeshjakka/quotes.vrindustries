@@ -59,29 +59,7 @@ const ClientContext = createContext<{
 
 export function ClientProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(clientReducer, initialState);
-
-  useEffect(() => {
-    // Load clients
-    const savedClients = localStorage.getItem("clients");
-    if (savedClients) {
-      try {
-        const clients = JSON.parse(savedClients);
-        dispatch({ type: "SET_CLIENTS", payload: clients });
-      } catch (error) {
-        console.error("Error loading clients:", error);
-      }
-    }
-  }, []);
-
-  // Save to localStorage whenever state changes
-  useEffect(() => {
-    try {
-      localStorage.setItem("clients", JSON.stringify(state));
-    } catch (error) {
-      console.error("Error saving clients:", error);
-    }
-  }, [state]);
-
+ 
   return (
     <ClientContext.Provider value={{ state, dispatch }}>
       {children}

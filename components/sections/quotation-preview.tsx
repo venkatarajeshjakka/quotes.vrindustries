@@ -232,115 +232,167 @@ export default function QuotationPreview() {
           12,
           true
         );
-        yPosition += 5;
-
-        // Table headers
-        const tableStartY = yPosition;
-        const colWidths = [15, 80, 20, 30, 35]; // S.No, Description, Qty, Rate, Amount
-        let currentX = margin;
-
-        pdf.setFontSize(9);
-        pdf.setFont("", "bold");
-        pdf.rect(margin, yPosition - 3, contentWidth, 8);
-        pdf.setFillColor(240, 240, 240);
-        pdf.rect(margin, yPosition - 3, contentWidth, 8, "F");
-
-        pdf.text("S.No.", currentX + 2, yPosition + 2);
-        currentX += colWidths[0];
-        pdf.text("Description", currentX + 2, yPosition + 2);
-        currentX += colWidths[1];
-        pdf.text("Qty", currentX + 2, yPosition + 2);
-        currentX += colWidths[2];
-        pdf.text("Rate (₹)", currentX + 2, yPosition + 2);
-        currentX += colWidths[3];
-        pdf.text("Amount (₹)", currentX + 2, yPosition + 2);
-
         yPosition += 8;
-        pdf.setFont("", "normal");
+
+        // Table configuration
+        const colWidths = [15, 75, 18, 30, 32]; // S.No, Description, Qty, Rate, Amount
+        const tableStartX = margin;
+        const tableWidth = colWidths.reduce((sum, width) => sum + width, 0);
+        const headerHeight = 10;
+        const rowMinHeight = 12;
+
+        // Draw table header
+        pdf.setDrawColor(0, 0, 0);
+        pdf.setFillColor(240, 240, 240);
+        pdf.rect(tableStartX, yPosition - 2, tableWidth, headerHeight, "FD");
+
+        // Header text
+        pdf.setFontSize(10);
+        pdf.setFont("helvetica", "bold");
+        let currentX = tableStartX;
+
+        // S.No header
+        pdf.text("S.No.", currentX + 2, yPosition + 5);
+        pdf.line(currentX + colWidths[0], yPosition - 2, currentX + colWidths[0], yPosition + headerHeight - 2);
+        currentX += colWidths[0];
+
+        // Description header
+        pdf.text("Description", currentX + 2, yPosition + 5);
+        pdf.line(currentX + colWidths[1], yPosition - 2, currentX + colWidths[1], yPosition + headerHeight - 2);
+        currentX += colWidths[1];
+
+        // Qty header (centered)
+        const qtyText = "Qty";
+        const qtyWidth = pdf.getTextWidth(qtyText);
+        pdf.text(qtyText, currentX + (colWidths[2] - qtyWidth) / 2, yPosition + 5);
+        pdf.line(currentX + colWidths[2], yPosition - 2, currentX + colWidths[2], yPosition + headerHeight - 2);
+        currentX += colWidths[2];
+
+        // Rate header (centered)
+        const rateText = "Rate (₹)";
+        const rateWidth = pdf.getTextWidth(rateText);
+        pdf.text(rateText, currentX + (colWidths[3] - rateWidth) / 2, yPosition + 5);
+        pdf.line(currentX + colWidths[3], yPosition - 2, currentX + colWidths[3], yPosition + headerHeight - 2);
+        currentX += colWidths[3];
+
+        // Amount header (centered)
+        const amountText = "Amount (₹)";
+        const amountWidth = pdf.getTextWidth(amountText);
+        pdf.text(amountText, currentX + (colWidths[4] - amountWidth) / 2, yPosition + 5);
+
+        yPosition += headerHeight;
+        pdf.setFont("helvetica", "normal");
+        pdf.setFontSize(9);
 
         // Table rows
         state.quotation.products.forEach((product, index) => {
-          if (yPosition > pageHeight - 30) {
+          if (yPosition > pageHeight - 40) {
             pdf.addPage();
             yPosition = 20;
           }
 
-          const rowHeight = Math.max(
-            8,
-            Math.ceil(product.description.length / 50) * 4 + 4
-          );
+          // Calculate row height based on description length
+          const descLines = pdf.splitTextToSize(product.description, colWidths[1] - 4);
+          const rowHeight = Math.max(rowMinHeight, descLines.length * 4 + 4);
 
-          // Draw row border
-          pdf.rect(margin, yPosition - 3, contentWidth, rowHeight);
+          // Draw row background and borders
+          pdf.setFillColor(255, 255, 255);
+          pdf.rect(tableStartX, yPosition, tableWidth, rowHeight, "FD");
 
-          currentX = margin;
-          pdf.text((index + 1).toString(), currentX + 2, yPosition + 2);
+          currentX = tableStartX;
+          const textY = yPosition + 6;
+
+          // S.No (centered)
+          const snoText = (index + 1).toString();
+          const snoWidth = pdf.getTextWidth(snoText);
+          pdf.text(snoText, currentX + (colWidths[0] - snoWidth) / 2, textY);
+          pdf.line(currentX + colWidths[0], yPosition, currentX + colWidths[0], yPosition + rowHeight);
           currentX += colWidths[0];
 
-          const descLines = pdf.splitTextToSize(
-            product.description,
-            colWidths[1] - 4
-          );
-          pdf.text(descLines, currentX + 2, yPosition + 2);
+          // Description (left aligned, wrapped)
+          pdf.text(descLines, currentX + 2, textY);
+          pdf.line(currentX + colWidths[1], yPosition, currentX + colWidths[1], yPosition + rowHeight);
           currentX += colWidths[1];
 
-          pdf.text(product.quantity.toString(), currentX + 2, yPosition + 2);
+          // Quantity (centered)
+          const qtyText = product.quantity.toString();
+          const qtyTextWidth = pdf.getTextWidth(qtyText);
+          pdf.text(qtyText, currentX + (colWidths[2] - qtyTextWidth) / 2, textY);
+          pdf.line(currentX + colWidths[2], yPosition, currentX + colWidths[2], yPosition + rowHeight);
           currentX += colWidths[2];
 
-          pdf.text(
-            product.rate.toLocaleString("en-IN"),
-            currentX + 2,
-            yPosition + 2
-          );
+          // Rate (right aligned)
+          const rateText = product.rate.toLocaleString("en-IN");
+          const rateTextWidth = pdf.getTextWidth(rateText);
+          pdf.text(rateText, currentX + colWidths[3] - rateTextWidth - 2, textY);
+          pdf.line(currentX + colWidths[3], yPosition, currentX + colWidths[3], yPosition + rowHeight);
           currentX += colWidths[3];
 
-          pdf.text(
-            product.amount.toLocaleString("en-IN"),
-            currentX + 2,
-            yPosition + 2
-          );
+          // Amount (right aligned)
+          const amountText = product.amount.toLocaleString("en-IN");
+          const amountTextWidth = pdf.getTextWidth(amountText);
+          pdf.text(amountText, currentX + colWidths[4] - amountTextWidth - 2, textY);
 
           yPosition += rowHeight;
         });
 
+        // Draw bottom border of table
+        pdf.line(tableStartX, yPosition, tableStartX + tableWidth, yPosition);
+
         // Totals section
-        yPosition += 5;
-        const totalsX = pageWidth - 80;
-        yPosition = addText(
-          `Subtotal: ₹${state.quotation.subtotal.toLocaleString("en-IN")}`,
-          totalsX,
-          yPosition,
-          undefined,
-          10,
-          true
-        );
-        yPosition = addText(
-          `GST (${
-            state.quotation.gstRate
-          }%): ₹${state.quotation.gstAmount.toLocaleString("en-IN")}`,
-          totalsX,
-          yPosition,
-          undefined,
-          10,
-          true
-        );
-        yPosition = addText(
-          `Total: ₹${state.quotation.total.toLocaleString("en-IN")}`,
-          totalsX,
-          yPosition,
-          undefined,
-          12,
-          true
-        );
         yPosition += 10;
+        const totalsStartX = tableStartX + colWidths[0] + colWidths[1] + colWidths[2];
+        const totalsWidth = colWidths[3] + colWidths[4];
+        const labelColWidth = 25; // Reduced label column width
+        const valueColWidth = totalsWidth - labelColWidth; // Increased value column width
+
+        pdf.setFontSize(9);
+        pdf.setFont("helvetica", "normal");
+
+        // Subtotal row
+        const subtotalHeight = 8;
+        pdf.setDrawColor(0, 0, 0);
+        pdf.setFillColor(250, 250, 250);
+        pdf.rect(totalsStartX, yPosition, totalsWidth, subtotalHeight, "FD");
+        pdf.line(totalsStartX + labelColWidth, yPosition, totalsStartX + labelColWidth, yPosition + subtotalHeight);
+
+        pdf.setFont("helvetica", "bold");
+        pdf.text("Subtotal:", totalsStartX + 2, yPosition + 5);
+        const subtotalText = `₹${state.quotation.subtotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+        pdf.text(subtotalText, totalsStartX + labelColWidth + 2, yPosition + 5);
+        yPosition += subtotalHeight;
+
+        // GST row
+        const gstHeight = 8;
+        pdf.setFillColor(250, 250, 250);
+        pdf.rect(totalsStartX, yPosition, totalsWidth, gstHeight, "FD");
+        pdf.line(totalsStartX + labelColWidth, yPosition, totalsStartX + labelColWidth, yPosition + gstHeight);
+
+        const gstLabel = `GST (${state.quotation.gstRate}%):`;
+        pdf.text(gstLabel, totalsStartX + 2, yPosition + 5);
+        const gstText = `₹${state.quotation.gstAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+        pdf.text(gstText, totalsStartX + labelColWidth + 2, yPosition + 5);
+        yPosition += gstHeight;
+
+        // Total row
+        const totalHeight = 10;
+        pdf.setFillColor(230, 230, 230);
+        pdf.rect(totalsStartX, yPosition, totalsWidth, totalHeight, "FD");
+        pdf.line(totalsStartX + labelColWidth, yPosition, totalsStartX + labelColWidth, yPosition + totalHeight);
+
+        pdf.setFontSize(10);
+        pdf.setFont("helvetica", "bold");
+        pdf.text("Total:", totalsStartX + 2, yPosition + 6);
+        const totalText = `₹${state.quotation.total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+        pdf.text(totalText, totalsStartX + labelColWidth + 2, yPosition + 6);
+        yPosition += totalHeight + 10;
       }
 
       const renderMarkdownToPDF = (markdown: string, y: number): number => {
         const tokens = marked.lexer(markdown);
         let listIndex = 1;
-        let inList = false;
-        let isOrdered = false;
         const lineHeight = 5;
+
         const checkPage = (y: number, extra = 0) => {
           if (y + extra > pageHeight - 20) {
             pdf.addPage();
@@ -348,46 +400,89 @@ export default function QuotationPreview() {
           }
           return y;
         };
+
         tokens.forEach((token: any) => {
           if (token.type === "heading") {
-            y += 6; // More space before headings
+            y += 6;
             y = checkPage(y, lineHeight * 2);
-            pdf.setFontSize(11);
+            pdf.setFontSize(token.depth === 1 ? 12 : 11);
             pdf.setFont("helvetica", "bold");
-            y = addText(token.text, margin, y, contentWidth, 11, true);
-            y += 2;
+            y = addText(token.text, margin, y, contentWidth, token.depth === 1 ? 12 : 11, true);
+            y += 3;
             pdf.setFont("helvetica", "normal");
           } else if (token.type === "paragraph") {
             y += 2;
-            y = checkPage(y, lineHeight * 2);
-            y = addText(token.text, margin, y, contentWidth, 9);
+            y = checkPage(y, lineHeight * 3);
+            // Handle bold text within paragraphs
+            let text = token.text;
+            if (text.includes("**")) {
+              // Split by bold markers and render accordingly
+              const parts = text.split(/(\*\*[^*]+\*\*)/);
+              let currentX = margin;
+              parts.forEach((part: string) => {
+                if (part.startsWith("**") && part.endsWith("**")) {
+                  const boldText = part.slice(2, -2);
+                  pdf.setFont("helvetica", "bold");
+                  const textWidth = pdf.getTextWidth(boldText);
+                  pdf.text(boldText, currentX, y);
+                  currentX += textWidth;
+                  pdf.setFont("helvetica", "normal");
+                } else if (part.trim()) {
+                  const textWidth = pdf.getTextWidth(part);
+                  pdf.text(part, currentX, y);
+                  currentX += textWidth;
+                }
+              });
+              y += 5;
+            } else {
+              y = addText(text, margin, y, contentWidth, 9);
+            }
             y += 2;
           } else if (token.type === "list") {
-            inList = true;
-            isOrdered = token.ordered || false;
-            listIndex = 1;
+            const isOrdered = token.ordered || false;
+            listIndex = token.start || 1;
+
             (token.items as any[]).forEach((item: any) => {
               y = checkPage(y, lineHeight * 2);
-              // Remove leading * or - or number and extra spaces
-              const text = item.text.replace(/^([*-]|\d+\.)\s*/, "");
-              // Indent list items and use bullet or number
-              let prefix = isOrdered ? `${listIndex}. ` : "• ";
-              y = addText(
-                `${prefix}${text}`,
-                margin + 8,
-                y,
-                contentWidth - 12,
-                9
-              );
-              listIndex++;
+
+              // Clean the text and handle nested formatting
+              let text = item.text;
+              if (typeof text !== 'string') {
+                // Handle complex item structures
+                text = item.raw || String(item);
+              }
+
+              // Remove markdown formatting for PDF
+              text = text.replace(/\*\*(.*?)\*\*/g, '$1'); // Remove bold markers
+              text = text.replace(/^\s*[\*\-\+]\s*/, ''); // Remove bullet markers
+              text = text.replace(/^\s*\d+\.\s*/, ''); // Remove number markers
+
+              // Add appropriate prefix
+              const prefix = isOrdered ? `${listIndex}. ` : "• ";
+
+              // Split long text into multiple lines if needed
+              const maxWidth = contentWidth - 16;
+              const lines = pdf.splitTextToSize(`${prefix}${text}`, maxWidth);
+
+              lines.forEach((line: string, index: number) => {
+                y = checkPage(y, lineHeight);
+                if (index === 0) {
+                  y = addText(line, margin + 8, y, maxWidth, 9);
+                } else {
+                  // Indent continuation lines
+                  y = addText(line, margin + 16, y, maxWidth - 8, 9);
+                }
+              });
+
+              if (isOrdered) listIndex++;
               y += 1;
             });
-            y += 2;
-            inList = false;
+            y += 3;
           } else if (token.type === "space") {
-            y += 2;
+            y += 3;
           }
         });
+
         return y;
       };
 
@@ -461,7 +556,6 @@ export default function QuotationPreview() {
           yPosition = 20;
         }
         // Draw a light gray box for bank details
-        const boxTop = yPosition;
         const boxHeight = 32;
         yPosition = addText(
           "Bank Details:",
@@ -782,9 +876,14 @@ export default function QuotationPreview() {
               <ReactMarkdown
                 components={{
                   ul: ({ node, ...props }) => (
-                    <ol className="list-decimal pl-6" {...(props as any)} />
+                    <ul className="list-disc pl-6 space-y-1" {...(props as any)} />
                   ),
-                  li: ({ node, ...props }) => <li {...props} />,
+                  ol: ({ node, ...props }) => (
+                    <ol className="list-decimal pl-6 space-y-1" {...(props as any)} />
+                  ),
+                  li: ({ node, ...props }) => <li className="mb-1" {...props} />,
+                  p: ({ node, ...props }) => <p className="mb-2" {...props} />,
+                  strong: ({ node, ...props }) => <strong className="font-semibold" {...props} />,
                 }}
               >
                 {state.quotation.technicalDetails}
@@ -804,9 +903,14 @@ export default function QuotationPreview() {
               <ReactMarkdown
                 components={{
                   ul: ({ node, ...props }) => (
-                    <ol className="list-decimal pl-6" {...(props as any)} />
+                    <ul className="list-disc pl-6 space-y-1" {...(props as any)} />
                   ),
-                  li: ({ node, ...props }) => <li {...props} />,
+                  ol: ({ node, ...props }) => (
+                    <ol className="list-decimal pl-6 space-y-1" {...(props as any)} />
+                  ),
+                  li: ({ node, ...props }) => <li className="mb-1" {...props} />,
+                  p: ({ node, ...props }) => <p className="mb-2" {...props} />,
+                  strong: ({ node, ...props }) => <strong className="font-semibold" {...props} />,
                 }}
               >
                 {state.quotation.keyFeatures}
@@ -826,9 +930,14 @@ export default function QuotationPreview() {
               <ReactMarkdown
                 components={{
                   ul: ({ node, ...props }) => (
-                    <ol className="list-decimal pl-6" {...(props as any)} />
+                    <ul className="list-disc pl-6 space-y-1" {...(props as any)} />
                   ),
-                  li: ({ node, ...props }) => <li {...props} />,
+                  ol: ({ node, ...props }) => (
+                    <ol className="list-decimal pl-6 space-y-1" {...(props as any)} />
+                  ),
+                  li: ({ node, ...props }) => <li className="mb-1" {...props} />,
+                  p: ({ node, ...props }) => <p className="mb-2" {...props} />,
+                  strong: ({ node, ...props }) => <strong className="font-semibold" {...props} />,
                 }}
               >
                 {state.quotation.termsAndConditions}
