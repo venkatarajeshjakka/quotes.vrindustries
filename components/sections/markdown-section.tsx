@@ -110,7 +110,7 @@ export function MarkdownSection({
               rows={8}
             />
           ) : (
-            <div className="mt-2 bg-white/90 dark:bg-muted/30 rounded-lg p-4 border border-green-200 text-base prose prose-blue prose-li:my-1 prose-strong:text-blue-700 prose-strong:font-semibold max-w-none min-h-[120px] shadow-sm">
+            <div className="mt-2 bg-background/90 rounded-lg p-4 border border-border text-base prose prose-slate dark:prose-invert prose-li:my-1 prose-strong:text-primary prose-strong:font-semibold max-w-none min-h-[120px] shadow-sm">
               <ReactMarkdown>
                 {value || `_No ${label.toLowerCase()} provided yet._`}
               </ReactMarkdown>

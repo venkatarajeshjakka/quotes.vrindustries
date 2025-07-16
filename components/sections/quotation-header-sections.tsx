@@ -32,10 +32,10 @@ const QuotationHeaderSection = ({
 }: HeaderProps) => {
   const getStatusBadge = (status: string) => {
     const colors = {
-      draft: "bg-amber-100 text-amber-800",
-      sent: "bg-blue-100 text-blue-800",
-      accepted: "bg-green-100 text-green-800",
-      rejected: "bg-red-100 text-red-800",
+      draft: "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300",
+      sent: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300",
+      accepted: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300",
+      rejected: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300",
     };
     return colors[status as keyof typeof colors] || colors.draft;
   };
@@ -46,21 +46,21 @@ const QuotationHeaderSection = ({
     setLastSavedTime(new Date().toLocaleTimeString());
   }, []);
   return (
-    <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200/50 p-4 sticky top-0 z-10">
+    <header className="bg-background/80 backdrop-blur-sm border-b border-border/50 p-4 sticky top-0 z-10">
       <div className="flex items-center gap-4">
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-1">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-blue-600 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
               Quotation Generator
             </h1>
             <Badge className={`${getStatusBadge(status)} font-medium`}>
               {status.toUpperCase()}
             </Badge>
           </div>
-          <p className="text-gray-600">
+          <p className="text-muted-foreground">
             Create professional quotations with AI assistance
           </p>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-muted-foreground mt-1">
             {quotationNumber} • Last saved: {lastSavedTime}
           </p>
         </div>
@@ -90,7 +90,7 @@ const QuotationHeaderSection = ({
             onClick={handlePreview}
             variant="outline"
             size="sm"
-            className="hover:bg-blue-50"
+            className="hover:bg-accent/50"
           >
             <Eye className="w-4 h-4 mr-2" />
             Preview
@@ -99,7 +99,7 @@ const QuotationHeaderSection = ({
             onClick={handlePrint}
             variant="outline"
             size="sm"
-            className="hover:bg-purple-50"
+            className="hover:bg-accent/50"
           >
             <Printer className="w-4 h-4 mr-2" />
             Print
@@ -107,7 +107,7 @@ const QuotationHeaderSection = ({
           <Button
             onClick={handleExportPDF}
             size="sm"
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+            className="bg-primary hover:bg-primary/90"
           >
             <Download className="w-4 h-4 mr-2" />
             Export PDF

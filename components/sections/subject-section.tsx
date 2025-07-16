@@ -73,12 +73,12 @@ export default function SubjectSection() {
 
   return (
     <div className="space-y-4">
-      <Card className="border-2 border-dashed border-gray-200 hover:border-blue-300 transition-colors">
+      <Card className="border-2 border-dashed border-border hover:border-primary/50 transition-colors">
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-lg">
             <Lightbulb className="w-5 h-5 text-yellow-500" />
             Subject Line
-            <span className="text-sm font-normal text-gray-500">
+            <span className="text-sm font-normal text-muted-foreground">
               - Make it compelling
             </span>
           </CardTitle>
@@ -105,7 +105,7 @@ export default function SubjectSection() {
                 Enhance with AI
               </Button>
             </div>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-muted-foreground">
               💡 Tip: Be specific about your product/service for better AI
               enhancement
             </p>

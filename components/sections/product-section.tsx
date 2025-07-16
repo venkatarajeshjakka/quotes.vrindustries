@@ -147,20 +147,20 @@ export default function ProductSection() {
 
   return (
     <div className="space-y-8">
-      <Card className="shadow-lg border border-blue-100 dark:border-blue-900 bg-white dark:bg-muted/80">
+      <Card className="shadow-lg border border-border bg-card">
         <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-xl font-bold text-blue-900 dark:text-blue-100">
-            <Package className="w-5 h-5 text-blue-500" />
+          <CardTitle className="flex items-center gap-2 text-xl font-bold text-foreground">
+            <Package className="w-5 h-5 text-primary" />
             Product Details
-            <span className="text-base font-normal text-blue-500 dark:text-blue-300">
+            <span className="text-base font-normal text-muted-foreground">
               – Add your products/services
             </span>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-8">
           {/* Add New Product */}
-          <div className="p-6 border-2 border-dashed border-blue-200 dark:border-blue-700 rounded-2xl bg-gradient-to-br from-blue-50/70 to-purple-50/60 dark:from-blue-900/30 dark:to-purple-900/20 shadow-sm">
-            <h4 className="font-bold text-blue-900 dark:text-blue-100 mb-4 flex items-center gap-2 text-lg">
+          <div className="p-6 border-2 border-dashed border-border rounded-2xl bg-gradient-to-br from-accent/20 to-accent/10 shadow-sm">
+            <h4 className="font-bold text-foreground mb-4 flex items-center gap-2 text-lg">
               <Plus className="w-4 h-4" />
               Add New Product/Service
             </h4>
@@ -179,7 +179,7 @@ export default function ProductSection() {
                   }
                   placeholder="e.g., Industrial Packaging Machine with automated controls..."
                   rows={3}
-                  className="mt-1 bg-blue-50/60 dark:bg-muted/40 border border-blue-200 dark:border-blue-700 rounded-lg focus:ring-2 focus:ring-blue-400 transition"
+                  className="mt-1 bg-background/60 border border-border rounded-lg focus:ring-2 focus:ring-ring transition"
                 />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -227,7 +227,7 @@ export default function ProductSection() {
               </div>
               <Button
                 onClick={addProduct}
-                className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold shadow-md rounded-lg"
+                className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-md rounded-lg"
               >
                 <Plus className="w-4 h-4 mr-2" />
                 Add Product
@@ -239,10 +239,10 @@ export default function ProductSection() {
           <div className="space-y-6">
             {state.quotation.products.map((product, index) => (
               <div key={product.id} className="space-y-4">
-                <Card className="border border-blue-100 dark:border-blue-900 hover:shadow-xl transition-all duration-200 bg-white dark:bg-muted/80 rounded-2xl">
+                <Card className="border border-border hover:shadow-xl transition-all duration-200 bg-card rounded-2xl">
                   <CardContent className="p-6 space-y-6">
                     <div className="flex items-start justify-between mb-4">
-                      <h4 className="font-bold text-lg text-blue-900 dark:text-blue-100 flex items-center gap-2">
+                      <h4 className="font-bold text-lg text-foreground flex items-center gap-2">
                         <Package className="w-4 h-4" />
                         Product {index + 1}
                       </h4>
@@ -250,7 +250,7 @@ export default function ProductSection() {
                         onClick={() => removeProduct(product.id)}
                         variant="outline"
                         size="sm"
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50 border border-red-200 dark:border-red-700 rounded-lg"
+                        className="text-destructive hover:text-destructive-foreground hover:bg-destructive/10 border border-destructive/20 rounded-lg"
                         title="Remove Product"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -272,7 +272,7 @@ export default function ProductSection() {
                             }
                             disabled={enhancingProductId === product.id}
                             size="sm"
-                            className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white"
+                            className="bg-primary hover:bg-primary/90 text-primary-foreground"
                           >
                             <Sparkles className="w-3 h-3 mr-1" />
                             Enhance with AI
@@ -288,7 +288,7 @@ export default function ProductSection() {
                             )
                           }
                           rows={3}
-                          className="font-medium bg-blue-50/60 dark:bg-muted/40 border border-blue-200 dark:border-blue-700 rounded-lg focus:ring-2 focus:ring-blue-400 transition"
+                          className="font-medium bg-background/60 border border-border rounded-lg focus:ring-2 focus:ring-ring transition"
                         />
                       </div>
 
@@ -337,7 +337,7 @@ export default function ProductSection() {
                           <Input
                             value={product.amount.toLocaleString("en-IN")}
                             readOnly
-                            className="bg-blue-50/60 dark:bg-muted/40 mt-1 font-semibold text-green-600 border border-blue-200 dark:border-blue-700 rounded-lg"
+                            className="bg-accent/20 mt-1 font-semibold text-green-600 dark:text-green-400 border border-border rounded-lg"
                           />
                         </div>
                       </div>
@@ -364,25 +364,25 @@ export default function ProductSection() {
 
           {/* Enhanced Totals */}
           {state.quotation.products.length > 0 && (
-            <Card className="border-0 shadow-lg bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-2xl">
+            <Card className="border-0 shadow-lg bg-gradient-to-r from-accent/20 to-accent/10 rounded-2xl">
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-4">
-                  <Calculator className="w-5 h-5 text-green-600" />
-                  <h3 className="text-lg font-semibold text-gray-900">
+                  <Calculator className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  <h3 className="text-lg font-semibold text-foreground">
                     Quotation Summary
                   </h3>
                 </div>
                 <div className="space-y-4">
-                  <div className="flex justify-between items-center py-2 border-b border-gray-200">
-                    <span className="text-gray-700 font-medium">Subtotal:</span>
-                    <span className="font-bold text-xl text-gray-900">
+                  <div className="flex justify-between items-center py-2 border-b border-border">
+                    <span className="text-muted-foreground font-medium">Subtotal:</span>
+                    <span className="font-bold text-xl text-foreground">
                       ₹{state.quotation.subtotal.toLocaleString("en-IN")}
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                  <div className="flex items-center justify-between py-2 border-b border-border">
                     <div className="flex items-center gap-3">
-                      <span className="text-gray-700 font-medium">GST:</span>
+                      <span className="text-muted-foreground font-medium">GST:</span>
                       <Select
                         value={state.quotation.gstRate.toString()}
                         onValueChange={(value) =>
@@ -404,16 +404,16 @@ export default function ProductSection() {
                         </SelectContent>
                       </Select>
                     </div>
-                    <span className="font-bold text-xl text-gray-900">
+                    <span className="font-bold text-xl text-foreground">
                       ₹{state.quotation.gstAmount.toLocaleString("en-IN")}
                     </span>
                   </div>
 
-                  <div className="flex justify-between items-center py-3 bg-gradient-to-r from-green-100 to-blue-100 rounded-lg px-4">
-                    <span className="text-lg font-bold text-gray-900">
+                  <div className="flex justify-between items-center py-3 bg-accent/30 rounded-lg px-4">
+                    <span className="text-lg font-bold text-foreground">
                       Total Amount:
                     </span>
-                    <span className="text-2xl font-bold text-green-600">
+                    <span className="text-2xl font-bold text-green-600 dark:text-green-400">
                       ₹{state.quotation.total.toLocaleString("en-IN")}
                     </span>
                   </div>

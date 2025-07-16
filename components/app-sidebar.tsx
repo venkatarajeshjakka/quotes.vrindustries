@@ -65,7 +65,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   ];
   const pathname = usePathname();
   return (
-    <Sidebar className="bg-gradient-to-b from-blue-50 via-white to-blue-100 dark:from-blue-950 dark:via-muted dark:to-blue-950 border-r border-blue-100 dark:border-blue-900 shadow-xl min-h-screen">
+    <Sidebar className="bg-gradient-to-b from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-r border-border shadow-xl min-h-screen">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -75,10 +75,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <Command className="size-5" />
                 </div>
                 <div className="grid flex-1 text-left text-base leading-tight ml-3">
-                  <span className="truncate font-bold tracking-wide text-blue-900 dark:text-blue-100">
+                  <span className="truncate font-bold tracking-wide text-foreground">
                     VR Industries
                   </span>
-                  <span className="truncate text-xs text-blue-500 dark:text-blue-300">
+                  <span className="truncate text-xs text-muted-foreground">
                     Enterprise
                   </span>
                 </div>
@@ -89,7 +89,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="uppercase text-xs font-semibold text-blue-700 dark:text-blue-300 tracking-wider mb-2">
+          <SidebarGroupLabel className="uppercase text-xs font-semibold text-muted-foreground tracking-wider mb-2">
             Platform
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -106,38 +106,34 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         href={item.url}
                         className={`group flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-300 ease-in-out
                           relative overflow-hidden
-                          ${
-                            isActive
-                              ? "bg-gradient-to-r from-blue-200 to-blue-100 dark:from-blue-900 dark:to-blue-800 shadow-lg scale-105 border border-blue-400 dark:border-blue-700"
-                              : "hover:bg-blue-100/70 dark:hover:bg-blue-900/30 hover:shadow-md"
+                          ${isActive
+                            ? "bg-primary/10 text-primary shadow-lg scale-105 border border-primary/20 font-bold"
+                            : "hover:bg-accent/50 hover:text-accent-foreground hover:shadow-md text-muted-foreground"
                           }
                         `}
                       >
                         <span
-                          className={`absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-blue-400 to-blue-600 rounded-r transition-all duration-500 ease-in-out
-                            ${
-                              isActive
-                                ? "opacity-100 scale-y-100"
-                                : "opacity-0 scale-y-0"
+                          className={`absolute left-0 top-0 h-full w-1 bg-primary rounded-r transition-all duration-500 ease-in-out
+                            ${isActive
+                              ? "opacity-100 scale-y-100"
+                              : "opacity-0 scale-y-0"
                             }
                           `}
                           aria-hidden="true"
                         />
                         <item.icon
                           className={`w-5 h-5 transition-transform duration-300 ease-in-out
-                          ${
-                            isActive
-                              ? "text-blue-700 dark:text-blue-300 scale-110"
-                              : "text-blue-600 dark:text-blue-400 group-hover:scale-110"
-                          }
+                          ${isActive
+                              ? "text-primary scale-110"
+                              : "group-hover:scale-110 group-hover:text-foreground"
+                            }
                         `}
                         />
                         <span
                           className={`font-semibold tracking-wide transition-colors duration-300 ease-in-out
-                            ${
-                              isActive
-                                ? "text-blue-900 dark:text-blue-100"
-                                : "text-blue-900 dark:text-blue-100 group-hover:text-blue-700 dark:group-hover:text-blue-300"
+                            ${isActive
+                              ? "text-primary"
+                              : "group-hover:text-foreground"
                             }
                           `}
                         >

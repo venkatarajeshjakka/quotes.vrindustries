@@ -25,10 +25,10 @@ export default function BankDetailsSection() {
   };
 
   return (
-    <Card className="shadow-md border border-gray-200 dark:border-muted bg-white dark:bg-muted/80">
+    <Card className="shadow-md border border-border bg-card">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-lg font-semibold">
-          <CreditCard className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+          <CreditCard className="w-5 h-5 text-primary" />
           <span>Bank Details</span>
         </CardTitle>
       </CardHeader>
@@ -36,20 +36,20 @@ export default function BankDetailsSection() {
         <div>
           <Label
             htmlFor="bank-select"
-            className="text-sm font-medium text-gray-700 dark:text-gray-200"
+            className="text-sm font-medium text-foreground"
           >
             Select Bank Account
           </Label>
           <div className="flex flex-col sm:flex-row gap-2 mt-2">
             <Select onValueChange={handleBankDetailsSelect}>
-              <SelectTrigger className="w-full sm:w-72 bg-white dark:bg-muted border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500">
+              <SelectTrigger className="w-full sm:w-72 bg-background border border-border focus:ring-2 focus:ring-ring">
                 <SelectValue placeholder="Choose bank account" />
               </SelectTrigger>
               <SelectContent className="z-50">
                 {state.map((bank) => (
                   <SelectItem key={bank.id} value={bank.id} className="text-sm">
                     {bank.bankName}{" "}
-                    <span className="text-gray-500">
+                    <span className="text-muted-foreground">
                       - {bank.accountNumber.slice(-4)}
                     </span>
                   </SelectItem>
@@ -59,56 +59,56 @@ export default function BankDetailsSection() {
             <Button
               variant="outline"
               size="icon"
-              className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-muted hover:bg-blue-50 dark:hover:bg-muted/60 transition"
+              className="border border-border bg-background hover:bg-accent/50 transition"
             >
-              <Plus className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+              <Plus className="w-4 h-4 text-primary" />
             </Button>
           </div>
         </div>
 
         {quotationState.quotation.bankDetails && (
-          <div className="space-y-4 p-6 rounded-2xl border border-blue-200 dark:border-blue-700 shadow-md">
+          <div className="space-y-4 p-6 rounded-2xl border border-border shadow-md">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <Label className="text-xs font-semibold text-blue-900 dark:text-blue-200 mb-1 block">
+                <Label className="text-xs font-semibold text-foreground mb-1 block">
                   Bank Name
                 </Label>
-                <div className="text-lg font-semibold py-2 min-h-[44px] flex items-center text-blue-900 dark:text-blue-100 ">
+                <div className="text-lg font-semibold py-2 min-h-[44px] flex items-center text-foreground ">
                   {quotationState.quotation.bankDetails.bankName}
                 </div>
               </div>
               <div>
-                <Label className="text-xs font-semibold text-blue-900 dark:text-blue-200 mb-1 block">
+                <Label className="text-xs font-semibold text-foreground mb-1 block">
                   Account Holder Name
                 </Label>
-                <div className="text-lg font-semibold  py-2 min-h-[44px] flex items-center text-blue-900 dark:text-blue-100 ">
+                <div className="text-lg font-semibold  py-2 min-h-[44px] flex items-center text-foreground ">
                   {quotationState.quotation.bankDetails.accountHolderName}
                 </div>
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <Label className="text-xs font-semibold text-blue-900 dark:text-blue-200 mb-1 block">
+                <Label className="text-xs font-semibold text-foreground mb-1 block">
                   Account Number
                 </Label>
-                <div className="text-lg font-mono tracking-wider py-2 min-h-[44px] flex items-center text-blue-900 dark:text-blue-100 ">
+                <div className="text-lg font-mono tracking-wider py-2 min-h-[44px] flex items-center text-foreground ">
                   {quotationState.quotation.bankDetails.accountNumber}
                 </div>
               </div>
               <div>
-                <Label className="text-xs font-semibold text-blue-900 dark:text-blue-200 mb-1 block">
+                <Label className="text-xs font-semibold text-foreground mb-1 block">
                   IFSC Code
                 </Label>
-                <div className="text-lg font-mono tracking-wider  py-2 min-h-[44px] flex items-center text-blue-900 dark:text-blue-100 ">
+                <div className="text-lg font-mono tracking-wider  py-2 min-h-[44px] flex items-center text-foreground ">
                   {quotationState.quotation.bankDetails.ifscCode}
                 </div>
               </div>
             </div>
             <div>
-              <Label className="text-xs font-semibold text-blue-900 dark:text-blue-200 mb-1 block">
+              <Label className="text-xs font-semibold text-foreground mb-1 block">
                 Branch
               </Label>
-              <div className="text-lg  py-2 min-h-[44px] flex items-center text-blue-900 dark:text-blue-100 ">
+              <div className="text-lg  py-2 min-h-[44px] flex items-center text-foreground ">
                 {quotationState.quotation.bankDetails.branch}
               </div>
             </div>

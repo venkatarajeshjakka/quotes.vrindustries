@@ -660,7 +660,7 @@ export default function QuotationPreview() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       {/* Print styles */}
       <style jsx>{`
         @media print {
@@ -681,7 +681,7 @@ export default function QuotationPreview() {
       `}</style>
 
       {/* Action Bar - Hidden in print */}
-      <div className="no-print sticky top-0 bg-white border-b border-gray-200 p-4 ">
+      <div className="no-print sticky top-0 bg-background border-b border-border p-4 ">
         <div className="container mx-auto flex justify-between items-center">
           <Button onClick={handleBack} variant="outline" size="lg">
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -695,7 +695,7 @@ export default function QuotationPreview() {
             <Button
               onClick={handleExportPDF}
               size="lg"
-              className="bg-blue-600 hover:bg-blue-700"
+              className="bg-primary hover:bg-primary/90"
             >
               <Download className="w-4 h-4 mr-2" />
               Export PDF
@@ -711,10 +711,10 @@ export default function QuotationPreview() {
           <div className="mb-8 pb-6 border-b-2 border-gray-300">
             <div className="flex justify-between items-start">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                <h1 className="text-3xl font-bold text-foreground mb-2">
                   {state.quotation.organization.name}
                 </h1>
-                <div className="text-gray-600 space-y-1">
+                <div className="text-muted-foreground space-y-1">
                   <p>{state.quotation.organization.address}</p>
                   <p>Phone: {state.quotation.organization.phone}</p>
                   <p>Email: {state.quotation.organization.email}</p>
@@ -727,7 +727,7 @@ export default function QuotationPreview() {
                 </div>
               </div>
               <div className="text-right">
-                <h2 className="text-2xl font-bold text-blue-600 mb-2">
+                <h2 className="text-2xl font-bold text-primary mb-2">
                   QUOTATION
                 </h2>
                 <div className="text-sm space-y-1">
@@ -755,15 +755,15 @@ export default function QuotationPreview() {
             <div className="bg-gray-50 p-4 rounded">
               <p className="font-medium">{state.quotation.client.name}</p>
               <p className="font-medium">{state.quotation.client.company}</p>
-              <p className="text-gray-600">{state.quotation.client.address}</p>
-              <p className="text-gray-600">
+              <p className="text-muted-foreground">{state.quotation.client.address}</p>
+              <p className="text-muted-foreground">
                 Phone: {state.quotation.client.phone}
               </p>
-              <p className="text-gray-600">
+              <p className="text-muted-foreground">
                 Email: {state.quotation.client.email}
               </p>
               {state.quotation.client.gstNumber && (
-                <p className="text-gray-600">
+                <p className="text-muted-foreground">
                   GST: {state.quotation.client.gstNumber}
                 </p>
               )}
@@ -775,7 +775,7 @@ export default function QuotationPreview() {
         {state.quotation.subject && (
           <div className="mb-6">
             <h3 className="text-lg font-semibold mb-2">Subject:</h3>
-            <p className="text-gray-700">{state.quotation.subject}</p>
+            <p className="text-foreground">{state.quotation.subject}</p>
           </div>
         )}
 
@@ -784,22 +784,22 @@ export default function QuotationPreview() {
           <div className="mb-8">
             <h3 className="text-lg font-semibold mb-4">Product Details:</h3>
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse border border-gray-300">
+              <table className="w-full border-collapse border border-border">
                 <thead>
-                  <tr className="bg-gray-100">
-                    <th className="border border-gray-300 p-3 text-left">
+                  <tr className="bg-accent/20">
+                    <th className="border border-border p-3 text-left">
                       S.No.
                     </th>
-                    <th className="border border-gray-300 p-3 text-left">
+                    <th className="border border-border p-3 text-left">
                       Description
                     </th>
-                    <th className="border border-gray-300 p-3 text-center">
+                    <th className="border border-border p-3 text-center">
                       Qty
                     </th>
-                    <th className="border border-gray-300 p-3 text-right">
+                    <th className="border border-border p-3 text-right">
                       Rate (₹)
                     </th>
-                    <th className="border border-gray-300 p-3 text-right">
+                    <th className="border border-border p-3 text-right">
                       Amount (₹)
                     </th>
                   </tr>

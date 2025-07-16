@@ -21,7 +21,7 @@ const BankDetailCard = ({
 }) => (
   <Card
     key={bank.id}
-    className="hover:shadow-2xl transition-shadow border-0 bg-white/95 rounded-2xl overflow-hidden relative"
+    className="hover:shadow-2xl transition-shadow border border-border bg-card/95 dark:bg-card/90 rounded-2xl overflow-hidden relative"
   >
     <CardContent className="p-8">
       {/* Action buttons absolutely positioned at top-right */}
@@ -29,7 +29,7 @@ const BankDetailCard = ({
         <Button
           variant="outline"
           size="sm"
-          className="border-purple-200 text-purple-700 hover:bg-purple-50 hover:text-purple-900 font-semibold px-4 py-2 rounded-lg shadow-sm flex items-center"
+          className="border-primary/20 text-primary hover:bg-primary/10 dark:hover:bg-primary/20 hover:text-primary font-semibold px-4 py-2 rounded-lg shadow-sm flex items-center"
           onClick={() => editBankDetails(bank)}
         >
           <Edit className="w-4 h-4 mr-1" />
@@ -39,7 +39,7 @@ const BankDetailCard = ({
           variant="outline"
           size="sm"
           onClick={() => deleteBankDetails(bank.id)}
-          className="border-red-200 text-red-600 hover:text-white hover:bg-red-500 hover:border-red-500 font-semibold px-4 py-2 rounded-lg shadow-sm flex items-center"
+          className="border-destructive/20 text-destructive hover:text-destructive-foreground hover:bg-destructive hover:border-destructive font-semibold px-4 py-2 rounded-lg shadow-sm flex items-center"
         >
           <Trash2 className="w-4 h-4" />
         </Button>
@@ -47,14 +47,14 @@ const BankDetailCard = ({
       <div className="flex flex-col gap-4 md:gap-0 md:flex-row md:justify-between md:items-center">
         <div className="flex-1 w-full">
           <div className="flex items-center gap-4 mb-5">
-            <div className="bg-gradient-to-br from-purple-400 to-purple-200 p-3 rounded-xl shadow-md">
-              <CreditCard className="w-7 h-7 text-white" />
+            <div className="bg-gradient-to-br from-primary to-primary/70 dark:from-primary/80 dark:to-primary/60 p-3 rounded-xl shadow-md">
+              <CreditCard className="w-7 h-7 text-primary-foreground" />
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 tracking-tight mb-1">
+              <h3 className="text-2xl font-bold text-foreground tracking-tight mb-1">
                 {bank.bankName}
               </h3>
-              <span className="inline-block text-xs bg-purple-50 text-purple-700 px-2 py-0.5 rounded-full font-medium">
+              <span className="inline-block text-xs bg-accent text-accent-foreground px-2 py-0.5 rounded-full font-medium">
                 {bank.accountHolderName}
               </span>
             </div>
@@ -62,22 +62,22 @@ const BankDetailCard = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-base">
             <div className="space-y-3">
               <div className="flex items-center gap-2">
-                <span className="font-medium text-gray-600">
+                <span className="font-medium text-muted-foreground">
                   Account Number:
                 </span>
-                <span className="text-gray-900 font-mono">
+                <span className="text-foreground font-mono">
                   {bank.accountNumber}
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="font-medium text-gray-600">IFSC Code:</span>
-                <span className="text-gray-900 font-mono">{bank.ifscCode}</span>
+                <span className="font-medium text-muted-foreground">IFSC Code:</span>
+                <span className="text-foreground font-mono">{bank.ifscCode}</span>
               </div>
             </div>
             <div className="space-y-3">
               <div className="flex items-center gap-2">
-                <Building className="w-5 h-5 text-purple-400" />
-                <span className="text-gray-800 font-medium">
+                <Building className="w-5 h-5 text-primary/70 dark:text-primary/80" />
+                <span className="text-foreground font-medium">
                   Branch: {bank.branch}
                 </span>
               </div>
@@ -94,7 +94,7 @@ export default function page() {
   const [editingBankDetails, setEditingBankDetails] = useState<BankDetails | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const { state, dispatch } = useBankDetails();
-  
+
   const filteredBankDetails = state.filter(
     (bank) =>
       bank.bankName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -145,7 +145,7 @@ export default function page() {
           )}
         </div>
       </main>
-      
+
       {/* Edit Bank Details Dialog */}
       {editingBankDetails && (
         <EditBankDetailsForm

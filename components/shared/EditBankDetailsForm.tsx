@@ -46,9 +46,9 @@ export function EditBankDetailsForm({ bankDetails, isOpen, onClose }: EditBankDe
           <div className="grid gap-3">
             <Label
               htmlFor="edit-bankName"
-              className="font-semibold text-gray-800"
+              className="font-semibold text-foreground"
             >
-              Bank Name <span className="text-red-500">*</span>
+              Bank Name <span className="text-destructive">*</span>
             </Label>
             <Input
               id="edit-bankName"
@@ -61,15 +61,15 @@ export function EditBankDetailsForm({ bankDetails, isOpen, onClose }: EditBankDe
               }
               required
               placeholder="e.g. HDFC Bank"
-              className="w-full bg-white/90 border border-blue-100 rounded-lg shadow-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-100 text-base px-4 py-3"
+              className="w-full bg-background/90 border border-border rounded-lg shadow-sm focus:border-primary focus:ring-2 focus:ring-ring text-base px-4 py-3"
             />
           </div>
           <div className="grid gap-3">
             <Label
               htmlFor="edit-accountHolderName"
-              className="font-semibold text-gray-800"
+              className="font-semibold text-foreground"
             >
-              Account Holder Name <span className="text-red-500">*</span>
+              Account Holder Name <span className="text-destructive">*</span>
             </Label>
             <Input
               id="edit-accountHolderName"
@@ -82,15 +82,15 @@ export function EditBankDetailsForm({ bankDetails, isOpen, onClose }: EditBankDe
               }
               required
               placeholder="e.g. Rajesh Kumar"
-              className="w-full bg-white/90 border border-blue-100 rounded-lg shadow-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-100 text-base px-4 py-3"
+              className="w-full bg-background/90 border border-border rounded-lg shadow-sm focus:border-primary focus:ring-2 focus:ring-ring text-base px-4 py-3"
             />
           </div>
           <div className="grid gap-3">
             <Label
               htmlFor="edit-accountNumber"
-              className="font-semibold text-gray-800"
+              className="font-semibold text-foreground"
             >
-              Account Number <span className="text-red-500">*</span>
+              Account Number <span className="text-destructive">*</span>
             </Label>
             <Input
               id="edit-accountNumber"
@@ -103,15 +103,15 @@ export function EditBankDetailsForm({ bankDetails, isOpen, onClose }: EditBankDe
               }
               required
               placeholder="e.g. 123456789012"
-              className="w-full bg-white/90 border border-blue-100 rounded-lg shadow-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-100 text-base px-4 py-3"
+              className="w-full bg-background/90 border border-border rounded-lg shadow-sm focus:border-primary focus:ring-2 focus:ring-ring text-base px-4 py-3"
             />
           </div>
           <div className="grid gap-3">
             <Label
               htmlFor="edit-ifscCode"
-              className="font-semibold text-gray-800"
+              className="font-semibold text-foreground"
             >
-              IFSC Code <span className="text-red-500">*</span>
+              IFSC Code <span className="text-destructive">*</span>
             </Label>
             <Input
               id="edit-ifscCode"
@@ -124,12 +124,12 @@ export function EditBankDetailsForm({ bankDetails, isOpen, onClose }: EditBankDe
               }
               required
               placeholder="e.g. HDFC0001234"
-              className="w-full bg-white/90 border border-blue-100 rounded-lg shadow-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-100 text-base px-4 py-3"
+              className="w-full bg-background/90 border border-border rounded-lg shadow-sm focus:border-primary focus:ring-2 focus:ring-ring text-base px-4 py-3"
             />
           </div>
           <div className="grid gap-3">
-            <Label htmlFor="edit-branch" className="font-semibold text-gray-800">
-              Branch <span className="text-red-500">*</span>
+            <Label htmlFor="edit-branch" className="font-semibold text-foreground">
+              Branch <span className="text-destructive">*</span>
             </Label>
             <Input
               id="edit-branch"
@@ -139,21 +139,21 @@ export function EditBankDetailsForm({ bankDetails, isOpen, onClose }: EditBankDe
               }
               required
               placeholder="e.g. MG Road, Bangalore"
-              className="w-full bg-white/90 border border-blue-100 rounded-lg shadow-sm focus:border-blue-400 focus:ring-2 focus:ring-blue-100 text-base px-4 py-3"
+              className="w-full bg-background/90 border border-border rounded-lg shadow-sm focus:border-primary focus:ring-2 focus:ring-ring text-base px-4 py-3"
             />
           </div>
-          <div className="flex justify-end gap-4 pt-6 border-t border-blue-100 mt-2">
+          <div className="flex justify-end gap-4 pt-6 border-t border-border mt-2">
             <Button
               type="button"
               variant="outline"
               onClick={onClose}
-              className="px-6 py-2 rounded-full border-gray-300 text-gray-700 hover:bg-gray-100 font-semibold transition-all"
+              className="px-6 py-2 rounded-full font-semibold transition-all"
             >
               Cancel
             </Button>
             <Button
               type="submit"
-              className="px-8 py-2 rounded-full bg-gradient-to-br from-blue-600 to-blue-400 text-white font-bold shadow-lg hover:from-blue-700 hover:to-blue-500 transition-all"
+              className="px-8 py-2 rounded-full bg-primary text-primary-foreground font-bold shadow-lg hover:bg-primary/90 transition-all"
             >
               Update Bank Details
             </Button>

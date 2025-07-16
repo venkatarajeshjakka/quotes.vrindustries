@@ -25,30 +25,30 @@ const BreadcrumbWithCustomSeperator = ({
           <BreadcrumbLink asChild>
             <Link
               href="/"
-              className="text-blue-600 hover:underline font-semibold"
+              className="text-primary hover:underline font-semibold"
             >
               Home
             </Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator>
-          <SlashIcon className="w-4 h-4 text-gray-400 mx-1" />
+          <SlashIcon className="w-4 h-4 text-muted-foreground mx-1" />
         </BreadcrumbSeparator>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
             <Link
               href={prePageHref}
-              className="text-blue-600 hover:underline font-semibold"
+              className="text-primary hover:underline font-semibold"
             >
               {prePageText}
             </Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator>
-          <SlashIcon className="w-4 h-4 text-gray-400 mx-1" />
+          <SlashIcon className="w-4 h-4 text-muted-foreground mx-1" />
         </BreadcrumbSeparator>
         <BreadcrumbItem>
-          <BreadcrumbPage className="text-gray-700 font-medium tracking-wide">
+          <BreadcrumbPage className="text-foreground font-medium tracking-wide">
             {currentPage}
           </BreadcrumbPage>
         </BreadcrumbItem>

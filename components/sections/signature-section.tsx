@@ -15,10 +15,10 @@ export default function SignatureSection() {
   };
 
   return (
-    <Card className="shadow-lg border border-blue-100 dark:border-blue-900 bg-white dark:bg-muted/80">
+    <Card className="shadow-lg border border-border bg-card">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-lg font-semibold">
-          <PenTool className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+          <PenTool className="w-5 h-5 text-primary" />
           <span>Signature & Authorization</span>
         </CardTitle>
       </CardHeader>
@@ -26,7 +26,7 @@ export default function SignatureSection() {
         <div>
           <Label
             htmlFor="signature"
-            className="text-sm font-medium text-gray-700 dark:text-gray-200"
+            className="text-sm font-medium text-foreground"
           >
             Authorized Signatory Details
           </Label>
@@ -36,23 +36,23 @@ export default function SignatureSection() {
             onChange={(e) => handleSignatureChange(e.target.value)}
             placeholder="Enter authorized signatory name, designation, and contact details..."
             rows={4}
-            className="mt-2 bg-blue-50/60 dark:bg-muted/40 border border-blue-200 dark:border-blue-700 rounded-lg focus:ring-2 focus:ring-blue-400 transition"
+            className="mt-2 bg-background/60 border border-border rounded-lg focus:ring-2 focus:ring-ring transition"
           />
         </div>
 
-        <div className="p-6 rounded-2xl border border-blue-200 dark:border-blue-700 bg-gradient-to-br from-blue-50/60 to-white dark:from-blue-900/30 dark:to-muted/60 shadow-md">
-          <h4 className="font-semibold mb-3 text-blue-900 dark:text-blue-100">
+        <div className="p-6 rounded-2xl border border-border bg-gradient-to-br from-accent/20 to-background shadow-md">
+          <h4 className="font-semibold mb-3 text-foreground">
             Signature Preview
           </h4>
           <div className="space-y-2">
-            <div className="flex flex-col items-end border-b border-blue-200 dark:border-blue-700 pb-8 mb-4">
-              <div className="w-48 h-16 border-b-2 border-blue-400 dark:border-blue-500 ml-auto mb-2 bg-white/60 dark:bg-muted/60 rounded-t-xl transition-all duration-300"></div>
-              <p className="text-xs text-blue-700 dark:text-blue-200 mt-1">
+            <div className="flex flex-col items-end border-b border-border pb-8 mb-4">
+              <div className="w-48 h-16 border-b-2 border-primary ml-auto mb-2 bg-background/60 rounded-t-xl transition-all duration-300"></div>
+              <p className="text-xs text-muted-foreground mt-1">
                 Authorized Signature
               </p>
             </div>
             {state.quotation.signature && (
-              <div className="whitespace-pre-wrap text-base font-medium text-blue-900 dark:text-blue-100 bg-blue-100/60 dark:bg-blue-900/30 rounded-lg px-4 py-2 border border-blue-100 dark:border-blue-800 shadow-sm">
+              <div className="whitespace-pre-wrap text-base font-medium text-foreground bg-accent/30 rounded-lg px-4 py-2 border border-border shadow-sm">
                 {state.quotation.signature}
               </div>
             )}
@@ -63,7 +63,7 @@ export default function SignatureSection() {
           <div>
             <Label
               htmlFor="quotation-number"
-              className="text-xs font-semibold text-blue-900 dark:text-blue-200 mb-1 block"
+              className="text-xs font-semibold text-foreground mb-1 block"
             >
               Quotation Number
             </Label>
@@ -76,13 +76,13 @@ export default function SignatureSection() {
                   payload: { quotationNumber: e.target.value },
                 })
               }
-              className="bg-white dark:bg-muted/70 border border-blue-200 dark:border-blue-700 text-base font-mono tracking-wider rounded-lg px-3 py-2 min-h-[44px]"
+              className="bg-background border border-border text-base font-mono tracking-wider rounded-lg px-3 py-2 min-h-[44px]"
             />
           </div>
           <div>
             <Label
               htmlFor="status"
-              className="text-xs font-semibold text-blue-900 dark:text-blue-200 mb-1 block"
+              className="text-xs font-semibold text-foreground mb-1 block"
             >
               Status
             </Label>
@@ -90,7 +90,7 @@ export default function SignatureSection() {
               id="status"
               value={state.quotation.status}
               readOnly
-              className="bg-blue-50/60 dark:bg-muted/40 border border-blue-200 dark:border-blue-700 text-base capitalize rounded-lg px-3 py-2 min-h-[44px]"
+              className="bg-accent/20 border border-border text-base capitalize rounded-lg px-3 py-2 min-h-[44px]"
             />
           </div>
         </div>
