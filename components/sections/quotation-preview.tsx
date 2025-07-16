@@ -708,7 +708,7 @@ export default function QuotationPreview() {
       <div className="container mx-auto p-8 max-w-4xl">
         {/* Header */}
         {state.quotation.organization && (
-          <div className="mb-8 pb-6 border-b-2 border-gray-300">
+          <div className="mb-8 pb-6 border-b-2 border-border">
             <div className="flex justify-between items-start">
               <div>
                 <h1 className="text-3xl font-bold text-foreground mb-2">
@@ -752,7 +752,7 @@ export default function QuotationPreview() {
         {state.quotation.client && (
           <div className="mb-6">
             <h3 className="text-lg font-semibold mb-3">Bill To:</h3>
-            <div className="bg-gray-50 p-4 rounded">
+            <div className="bg-accent/20 p-4 rounded">
               <p className="font-medium">{state.quotation.client.name}</p>
               <p className="font-medium">{state.quotation.client.company}</p>
               <p className="text-muted-foreground">{state.quotation.client.address}</p>
@@ -807,19 +807,19 @@ export default function QuotationPreview() {
                 <tbody>
                   {state.quotation.products.map((product, index) => (
                     <tr key={product.id}>
-                      <td className="border border-gray-300 p-3">
+                      <td className="border border-border p-3">
                         {index + 1}
                       </td>
-                      <td className="border border-gray-300 p-3">
+                      <td className="border border-border p-3">
                         {product.description}
                       </td>
-                      <td className="border border-gray-300 p-3 text-center">
+                      <td className="border border-border p-3 text-center">
                         {product.quantity}
                       </td>
-                      <td className="border border-gray-300 p-3 text-right">
+                      <td className="border border-border p-3 text-right">
                         {product.rate.toLocaleString("en-IN")}
                       </td>
-                      <td className="border border-gray-300 p-3 text-right">
+                      <td className="border border-border p-3 text-right">
                         {product.amount.toLocaleString("en-IN")}
                       </td>
                     </tr>
@@ -829,33 +829,33 @@ export default function QuotationPreview() {
                   <tr>
                     <td
                       colSpan={4}
-                      className="border border-gray-300 p-3 text-right font-medium"
+                      className="border border-border p-3 text-right font-medium"
                     >
                       Subtotal:
                     </td>
-                    <td className="border border-gray-300 p-3 text-right font-medium">
+                    <td className="border border-border p-3 text-right font-medium">
                       ₹{state.quotation.subtotal.toLocaleString("en-IN")}
                     </td>
                   </tr>
                   <tr>
                     <td
                       colSpan={4}
-                      className="border border-gray-300 p-3 text-right font-medium"
+                      className="border border-border p-3 text-right font-medium"
                     >
                       GST ({state.quotation.gstRate}%):
                     </td>
-                    <td className="border border-gray-300 p-3 text-right font-medium">
+                    <td className="border border-border p-3 text-right font-medium">
                       ₹{state.quotation.gstAmount.toLocaleString("en-IN")}
                     </td>
                   </tr>
-                  <tr className="bg-gray-100">
+                  <tr className="bg-accent/20">
                     <td
                       colSpan={4}
-                      className="border border-gray-300 p-3 text-right font-bold"
+                      className="border border-border p-3 text-right font-bold"
                     >
                       Total Amount:
                     </td>
-                    <td className="border border-gray-300 p-3 text-right font-bold text-green-600">
+                    <td className="border border-border p-3 text-right font-bold text-green-600 dark:text-green-400">
                       ₹{state.quotation.total.toLocaleString("en-IN")}
                     </td>
                   </tr>
@@ -870,7 +870,7 @@ export default function QuotationPreview() {
           <div className="mb-6">
             <h3 className="text-lg font-semibold mb-3">Technical Details:</h3>
             <div
-              className="prose prose-base max-w-none leading-relaxed text-gray-800  p-6 mb-2"
+              className="prose prose-base max-w-none leading-relaxed text-foreground dark:prose-invert p-6 mb-2"
               style={{ lineHeight: "2.1" }}
             >
               <ReactMarkdown
@@ -897,7 +897,7 @@ export default function QuotationPreview() {
           <div className="mb-6">
             <h3 className="text-lg font-semibold mb-3">Key Features:</h3>
             <div
-              className="prose prose-base max-w-none leading-relaxed text-gray-800  p-6 mb-2"
+              className="prose prose-base max-w-none leading-relaxed text-foreground dark:prose-invert p-6 mb-2"
               style={{ lineHeight: "2.1" }}
             >
               <ReactMarkdown
@@ -924,7 +924,7 @@ export default function QuotationPreview() {
           <div className="mb-6">
             <h3 className="text-lg font-semibold mb-3">Terms & Conditions:</h3>
             <div
-              className="prose prose-base max-w-none leading-relaxed text-gray-800  p-6 mb-2"
+              className="prose prose-base max-w-none leading-relaxed text-foreground dark:prose-invert p-6 mb-2"
               style={{ lineHeight: "2.1" }}
             >
               <ReactMarkdown
@@ -950,7 +950,7 @@ export default function QuotationPreview() {
         {state.quotation.bankDetails && (
           <div className="mb-8">
             <h3 className="text-lg font-semibold mb-3">Bank Details:</h3>
-            <div className="bg-gray-50 p-4 rounded">
+            <div className="bg-accent/20 p-4 rounded">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <p>
@@ -982,18 +982,18 @@ export default function QuotationPreview() {
         )}
 
         {/* Signature */}
-        <div className="mt-12 pt-8 border-t border-gray-300">
+        <div className="mt-12 pt-8 border-t border-border">
           <div className="flex justify-between items-end">
             <div>
-              <p className="text-sm text-gray-600 mb-8">
+              <p className="text-sm text-muted-foreground mb-8">
                 Thank you for your business!
               </p>
             </div>
             <div className="text-right">
-              <div className="w-48 h-16 border-b border-gray-400 mb-2"></div>
+              <div className="w-48 h-16 border-b border-border mb-2"></div>
               <p className="text-sm font-medium">Authorized Signature</p>
               {state.quotation.signature && (
-                <div className="mt-2 text-xs text-gray-600 whitespace-pre-wrap">
+                <div className="mt-2 text-xs text-muted-foreground whitespace-pre-wrap">
                   {state.quotation.signature}
                 </div>
               )}
@@ -1002,7 +1002,7 @@ export default function QuotationPreview() {
         </div>
 
         {/* Footer */}
-        <div className="mt-8 pt-4 border-t border-gray-200 text-center text-xs text-gray-500">
+        <div className="mt-8 pt-4 border-t border-border text-center text-xs text-muted-foreground">
           <p>
             This is a computer-generated quotation and does not require a
             physical signature.
