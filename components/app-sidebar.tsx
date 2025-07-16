@@ -76,7 +76,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
                 <div className="grid flex-1 text-left text-base leading-tight ml-3">
                   <span className="truncate font-bold tracking-wide text-blue-900 dark:text-blue-100">
-                    Acme Inc
+                    VR Industries
                   </span>
                   <span className="truncate text-xs text-blue-500 dark:text-blue-300">
                     Enterprise
